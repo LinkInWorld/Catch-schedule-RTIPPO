@@ -28,5 +28,5 @@ C:\Users\kwa\Desktop\lab6\lab6\bin\Debug\EntityFramework.xml
 C:\Users\kwa\Desktop\lab6\lab6\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\kwa\Desktop\lab6\lab6\bin\Debug\System.Data.SQLite.xml
 C:\Users\kwa\Desktop\lab6\lab6\obj\Debug\lab6.csproj.CopyComplete
-C:\Users\kwa\Desktop\lab6\lab6\obj\Debug\lab6.Auth.resources
-C:\Users\kwa\Desktop\lab6\lab6\obj\Debug\lab6.Main.resources
+C:\Users\kwa\Desktop\lab6\lab6\obj\Debug\lab6.AuthForm.resources
+C:\Users\kwa\Desktop\lab6\lab6\obj\Debug\lab6.MainForm.resources
