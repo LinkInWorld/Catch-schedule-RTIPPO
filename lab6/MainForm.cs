@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
+using System.Collections;
 
 namespace lab6
 {
@@ -38,6 +39,18 @@ namespace lab6
         {
             table = controller.getListOrganizationContract();
 
+            dataGridView1.DataSource = table;
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Update();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            table = controller.getListPlanSchedule();
+
+            //controller.getListPlanScheduleInserted(new ArrayList { "Тюмень", "May", "2077" });
+            //controller.getListPlanScheduleUpdated(2,new ArrayList{"Тюмень", "May","2027"});
+            //controller.getListPlanScheduleDeleted(2);
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();

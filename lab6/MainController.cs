@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -30,6 +31,31 @@ namespace lab6
 
             return table;
         }
+        public DataTable getListPlanSchedule()
+        {
+            table = db.ListPlanScheduleSelect();
+            return table;
+        }
+        public DataTable getListPlanScheduleDeleted(int idSelectedPlanSchedule)
+        {
+            
+            db.ListPlanScheduleDelete(idSelectedPlanSchedule);
+            table = db.ListPlanScheduleSelect();
+            return table;
+        }
+        public DataTable getListPlanScheduleInserted(ArrayList record)
+        {
 
+            db.ListPlanScheduleInsert(record);
+            table = db.ListPlanScheduleSelect();
+            return table;
+        }
+        public DataTable getListPlanScheduleUpdated(int idSelectedPlanSchedule,ArrayList record)
+        {
+
+            db.ListPlanScheduleUpdate(idSelectedPlanSchedule, record);
+            table = db.ListPlanScheduleSelect();
+            return table;
+        }
     }
 }
