@@ -12,12 +12,11 @@ namespace lab6
 {
     internal class DB
     {
-        //SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        //SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        // SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        SQLiteCommand cmd;
-        public void openConnection()
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteCommand cmd;
+        public static void openConnection()
         {
             if(connection.State == System.Data.ConnectionState.Closed) 
                 connection.Open();
@@ -33,17 +32,8 @@ namespace lab6
         {
             return connection;
         }
-        public string ExecuteQueryWithAnswer(string query)
-        {
-            openConnection();
-            cmd.CommandText = query;
-            var answer = cmd.ExecuteScalar();
-            closeConnection();
-
-            if (answer != null) return answer.ToString();
-            else return null;
-        }
-        public DataTable SelectFromDB(string Sring)
+        
+        public static DataTable SelectFromDB(string Sring)
         {
             openConnection();
             DataTable table = new DataTable();
@@ -71,13 +61,28 @@ namespace lab6
             return table;
         }
 
+
+        // Илья
         public static DataTable ListOrganizationSelect()
         {
             string sql = "SELECT * FROM Organization";
             DataTable table = SelectFromDB(sql);
             return table;
         }
-        public DataTable ListPlanScheduleSelect()
+
+        // Никита
+
+        public static string ExecuteQueryWithAnswer(string query)
+        {
+            openConnection();
+            cmd.CommandText = query;
+            var answer = cmd.ExecuteScalar();
+            closeConnection();
+
+            if (answer != null) return answer.ToString();
+            else return null;
+        }
+        public static DataTable ListPlanScheduleSelect()
         {
             string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
                          "FROM Plan_Schedule, Locality " +
@@ -85,7 +90,7 @@ namespace lab6
             DataTable table = SelectFromDB(sql);
             return table;
         }
-        public void ListPlanScheduleInsert(ArrayList record) 
+        public static void ListPlanScheduleInsert(ArrayList record) 
         {
             DataTable table = SelectFromDB(
                 "SELECT [Locality].id_Locality " +
@@ -96,13 +101,13 @@ namespace lab6
                 "INSERT INTO Plan_Schedule (id_Locality, Month, Year) " +
                 "VALUES ('" + table.Rows[0][0] + "', '" + record[1] + "', '" + record[2] + "');");
         }
-        public void ListPlanScheduleDelete(int idSelectedPlanSchedule) 
+        public static void ListPlanScheduleDelete(int idSelectedPlanSchedule) 
         {
             string sql = ExecuteQueryWithAnswer(
                 "DELETE FROM Plan_Schedule " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
         }
-        public void ListPlanScheduleUpdate(int idSelectedPlanSchedule, ArrayList record)
+        public static void ListPlanScheduleUpdate(int idSelectedPlanSchedule, ArrayList record)
         {
             DataTable table = SelectFromDB(
                 "SELECT [Locality].id_Locality " +

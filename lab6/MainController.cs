@@ -33,28 +33,28 @@ namespace lab6
         }
         public DataTable getListPlanSchedule()
         {
-            table = db.ListPlanScheduleSelect();
+            table = DB.ListPlanScheduleSelect();
             return table;
         }
         public DataTable getListPlanScheduleDeleted(int idSelectedPlanSchedule)
         {
-            
-            db.ListPlanScheduleDelete(idSelectedPlanSchedule);
-            table = db.ListPlanScheduleSelect();
+
+            DB.ListPlanScheduleDelete(idSelectedPlanSchedule);
+            table = DB.ListPlanScheduleSelect();
             return table;
         }
         public DataTable getListPlanScheduleInserted(ArrayList record)
         {
 
-            db.ListPlanScheduleInsert(record);
-            table = db.ListPlanScheduleSelect();
+            DB.ListPlanScheduleInsert(record);
+            table = DB.ListPlanScheduleSelect();
             return table;
         }
         public DataTable getListPlanScheduleUpdated(int idSelectedPlanSchedule,ArrayList record)
         {
 
-            db.ListPlanScheduleUpdate(idSelectedPlanSchedule, record);
-            table = db.ListPlanScheduleSelect();
+            DB.ListPlanScheduleUpdate(idSelectedPlanSchedule, record);
+            table = DB.ListPlanScheduleSelect();
             return table;
         }
     }
