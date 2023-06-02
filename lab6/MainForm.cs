@@ -13,10 +13,13 @@ using System.Threading;
 
 namespace lab6
 {
-    public partial class Main : Form
+    public partial class MainForm : Form
     {
         public User user;
-        public Main()
+        DataTable table = new DataTable();
+
+        MainController controller = new MainController();
+        public MainForm()
         {
             //this.user = user;
             InitializeComponent();
@@ -25,12 +28,7 @@ namespace lab6
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DB db = new DB();
-            DataTable table = new DataTable();
-
-            string sql = "SELECT * FROM Municipal_contract";
-            table = db.SelectFromDB(sql);
-
+            table = controller.getListMunicipalContract();
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
@@ -38,11 +36,7 @@ namespace lab6
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DB db = new DB();
-            DataTable table = new DataTable();
-
-            string sql = "SELECT * FROM Organization";
-            table = db.SelectFromDB(sql);
+            table = controller.getListOrganizationContract();
 
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
