@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthController.cs" />
+    <Compile Include="CatchPlanSchedule.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="AuthForm.cs">
       <SubType>Form</SubType>
