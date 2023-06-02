@@ -11,7 +11,6 @@ namespace lab6
     internal class DB
     {
         SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Desktop\\lab6\\lab6\\db.sqlite3");
-        //SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Desktop\\lab6\\lab6\\db.sqlite3");
 
         public void openConnection()
         {
