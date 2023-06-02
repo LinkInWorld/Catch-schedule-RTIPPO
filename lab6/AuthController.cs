@@ -14,13 +14,12 @@ namespace lab6
     {
         public User user;
         Thread th;
-        DB db = new DB();
         DataTable table = new DataTable();
 
 
         public void AythMetod(string loginUser, string passUser)
         {
-            table = db.AuthSelectInBD(loginUser, passUser);
+            table = DB.AuthSelectInBD(loginUser, passUser);
 
             if (table.Rows.Count > 0)
             {

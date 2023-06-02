@@ -10,27 +10,27 @@ namespace lab6
 {
     internal class DB
     {
-        SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         // SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        public void openConnection()
+        public static void openConnection()
         {
             if(connection.State == System.Data.ConnectionState.Closed) 
                 connection.Open();
         }
 
-        public void closeConnection()
+        public static void closeConnection()
         {
             if (connection.State == System.Data.ConnectionState.Open)
                 connection.Close();
         }
 
-        public SQLiteConnection getConnection()
+        public static SQLiteConnection getConnection()
         {
             return connection;
         }
 
-        public DataTable SelectFromDB(string Sring)
+        public static DataTable SelectFromDB(string Sring)
         {
             openConnection();
             DataTable table = new DataTable();
@@ -44,21 +44,21 @@ namespace lab6
             return table;
         }
 
-        public DataTable AuthSelectInBD(string loginUser, string passUser)
+        public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
             DataTable table = SelectFromDB(sql);
             return table;
         }
 
-        public DataTable ListMunicipalContractsSelect()
+        public static DataTable ListMunicipalContractsSelect()
         {
             string sql = "SELECT * FROM Municipal_contract";
             DataTable table = SelectFromDB(sql);
             return table;
         }
 
-        public DataTable ListOrganizationSelect()
+        public static DataTable ListOrganizationSelect()
         {
             string sql = "SELECT * FROM Organization";
             DataTable table = SelectFromDB(sql);

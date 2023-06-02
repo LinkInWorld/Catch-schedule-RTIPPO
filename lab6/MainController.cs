@@ -12,12 +12,11 @@ namespace lab6
     {
         public User user;
         Thread th;
-        DB db = new DB();
         public DataTable table = new DataTable();
 
         public DataTable getListMunicipalContract()
         {
-            table = db.ListMunicipalContractsSelect();
+            table = DB.ListMunicipalContractsSelect();
 
             return table;
             /* Это не стирать
@@ -27,7 +26,7 @@ namespace lab6
         }
         public DataTable getListOrganizationContract()
         {
-            table = db.ListOrganizationSelect();
+            table = DB.ListOrganizationSelect();
 
             return table;
         }
