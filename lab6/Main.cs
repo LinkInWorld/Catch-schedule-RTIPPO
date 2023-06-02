@@ -16,9 +16,9 @@ namespace lab6
     public partial class Main : Form
     {
         public User user;
-        public Main(User user)
+        public Main()
         {
-            this.user = user;
+            //this.user = user;
             InitializeComponent();
         }
 

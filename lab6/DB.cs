@@ -10,8 +10,8 @@ namespace lab6
 {
     internal class DB
     {
-        SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Desktop\\lab6\\lab6\\db.sqlite3");
-
+        SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         public void openConnection()
         {
             if(connection.State == System.Data.ConnectionState.Closed) 
@@ -38,6 +38,13 @@ namespace lab6
 
             adapter.SelectCommand = cmd;
             adapter.Fill(table);
+            return table;
+        }
+
+        public DataTable AuthSelectInBD(string loginUser, string passUser)
+        {
+            string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
+            DataTable table = SelectFromDB(sql);
             return table;
         }
     }
