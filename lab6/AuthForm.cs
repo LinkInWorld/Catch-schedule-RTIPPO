@@ -15,7 +15,6 @@ namespace lab6
 {
     public partial class AuthForm : Form
     {
-        Thread th;
         public User user;
         public AuthForm()
         {

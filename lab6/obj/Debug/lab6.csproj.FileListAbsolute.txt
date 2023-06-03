@@ -73,3 +73,4 @@ C:\Users\Poldnik999\source\repos\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.cspro
 C:\Users\Poldnik999\source\repos\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.exe
 C:\Users\Poldnik999\source\repos\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.pdb
 C:\Users\Poldnik999\source\repos\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.PlanScheduleCardForm.resources
+C:\Users\kwa\Documents\GitHub\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.PlanScheduleCardForm.resources

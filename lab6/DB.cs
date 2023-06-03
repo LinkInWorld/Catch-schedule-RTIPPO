@@ -12,21 +12,19 @@ namespace lab6
 {
     internal class DB
     {
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         static string sql;
         public static void openConnection()
         {
-            if(connection.State == System.Data.ConnectionState.Closed) 
-                connection.Open();
+            connection.Open();
         }
 
         public static void closeConnection()
         {
-            if (connection.State == System.Data.ConnectionState.Open)
-                connection.Close();
+            connection.Close();
         }
 
         public static SQLiteConnection getConnection()
@@ -57,14 +55,14 @@ namespace lab6
 
         public static DataTable ListMunicipalContractsSelect(User user)
         {
-            if( user.role == 4 || user.role == 3 || user.role == 2)
+            if (user.role == 4 || user.role == 3 || user.role == 2)
             {
                 sql = "SELECT * FROM Municipal_contract";
             }
             else
             {
-                sql = "SELECT * FROM Municipal_contract WHERE Customer ="+ user.idOrganization+ " OR Executor = " + user.idOrganization;
-            }            
+                sql = "SELECT * FROM Municipal_contract WHERE Customer =" + user.idOrganization + " OR Executor = " + user.idOrganization;
+            }
             DataTable table = SelectFromDB(sql);
             return table;
         }
