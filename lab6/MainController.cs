@@ -33,6 +33,17 @@ namespace lab6
             form.dataGridView1.Columns[0].Visible = false;
             form.dataGridView1.Update();*/
         }
+        public List<string> getListOrganization()
+        {
+            List<string> lst = new List<string>();
+            table = DB.ListOrganizationNameSelect();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                lst.Add(table.Rows[i][0].ToString());
+            }
+
+            return lst;
+        }
         public DataTable getListOrganizationContract()
         {
             table = DB.ListOrganizationSelect();

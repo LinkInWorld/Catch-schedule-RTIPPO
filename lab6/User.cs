@@ -20,13 +20,13 @@ namespace lab6
         public string login;
         public string password;
         public int idOrganization;
-        public int role;
+        public Role role;
 
         public User(DataTable table)
         {
             foreach (DataRow row in table.Rows)
             {
-                id = int.Parse(row[0].ToString());
+                id = Convert.ToInt32(row[0].ToString());
                 surname = row[1].ToString();
                 name = row[2].ToString();
                 patronymic = row[3].ToString();
@@ -34,8 +34,8 @@ namespace lab6
                 email = row[5].ToString();
                 login = row[6].ToString();
                 password = row[7].ToString();
-                idOrganization = int.Parse(row[8].ToString());
-                role = int.Parse(row[9].ToString());
+                idOrganization = Convert.ToInt32(row[8].ToString());
+                role = new Role(int.Parse(row[9].ToString()), row[11].ToString());
             }
 
         }
