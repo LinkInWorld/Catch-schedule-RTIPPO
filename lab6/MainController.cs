@@ -81,7 +81,7 @@ namespace lab6
         {
 
             DB.SelectCreateMunicipalContract(record);
-            return getListMunicipalContract();
+            return getListMunicipalContract(user);
         }
     }
 }
