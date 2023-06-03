@@ -55,7 +55,6 @@ namespace lab6
         public static DataTable ListMunicipalContractsSelect()
         {
 <<<<<<< HEAD
-<<<<<<< HEAD
             if (user.role == 4 || user.role == 3 || user.role == 2)
             {
                 sql = "SELECT * FROM Municipal_contract";
@@ -64,9 +63,6 @@ namespace lab6
             {
                 sql = "SELECT * FROM Municipal_contract WHERE Customer =" + user.idOrganization + " OR Executor = " + user.idOrganization;
             }
-=======
-            string sql = "SELECT * FROM Municipal_contract";
->>>>>>> parent of 6b93255 (Разделение ролей при выводе муниципальных контрактов)
 =======
             string sql = "SELECT * FROM Municipal_contract";
 >>>>>>> parent of 6b93255 (Разделение ролей при выводе муниципальных контрактов)
