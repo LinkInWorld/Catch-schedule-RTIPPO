@@ -12,12 +12,16 @@ namespace lab6
     public class MainController
     {
         public User user;
-        Thread th;
         public DataTable table = new DataTable();
 
         public DataTable getListMunicipalContract()
         {
             table = DB.ListMunicipalContractsSelect();
+            table.Columns["Number"].ColumnName = "Номер";
+            table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
+            table.Columns["Date_of_execution"].ColumnName = "Дата действия";
+            table.Columns["Customer"].ColumnName = "Заказчик";
+            table.Columns["Executor"].ColumnName = "Исполнитель";
 
             return table;
             /* Это не стирать
@@ -67,6 +71,12 @@ namespace lab6
             }
             
             return lst;
+        }
+        public DataTable CreateMunicipalContract(ArrayList record)
+        {
+
+            DB.SelectCreateMunicipalContract(record);
+            return getListMunicipalContract();
         }
     }
 }

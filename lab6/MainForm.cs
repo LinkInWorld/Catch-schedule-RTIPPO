@@ -21,12 +21,11 @@ namespace lab6
         DataTable table = new DataTable();
 
         MainController controller = new MainController();
-        public MainForm()
+        public MainForm(User user)
         {
-            //this.user = user;
+            this.user = user;
             InitializeComponent();
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -34,6 +33,7 @@ namespace lab6
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
             dataGridView3.Update();
+            tabControl1.SelectTab(tabPage3);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -43,6 +43,7 @@ namespace lab6
             dataGridView2.DataSource = table;
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Update();
+            tabControl1.SelectTab(tabPage2);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -56,6 +57,7 @@ namespace lab6
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
+            tabControl1.SelectTab(tabPage1);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -79,6 +81,21 @@ namespace lab6
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
+        {
+            controller.getListPlanScheduleInserted(new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.Text, AddExecutinContract.Text });
         }
     }
 }

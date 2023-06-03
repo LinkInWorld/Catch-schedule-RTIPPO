@@ -37,7 +37,7 @@ namespace lab6
 
         void open(object obj)
         {
-            Application.Run(new MainForm());
+            Application.Run(new MainForm(user));
         }
     }
 }

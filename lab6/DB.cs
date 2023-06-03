@@ -12,8 +12,8 @@ namespace lab6
 {
     internal class DB
     {
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         public static void openConnection()
@@ -59,6 +59,18 @@ namespace lab6
             string sql = "SELECT * FROM Municipal_contract";
             DataTable table = SelectFromDB(sql);
             return table;
+        }
+
+        public static void SelectCreateMunicipalContract(ArrayList record)
+        {
+            /*DataTable table = SelectFromDB(
+                "SELECT [Locality].id_Locality " +
+                "FROM Locality " +
+                "WHERE [Locality].Name = '" + record[0] + "'"
+                );
+            string sql = ExecuteQueryWithAnswer(
+                "INSERT INTO Plan_Schedule (id_Locality, Month, Year) " +
+                "VALUES ('" + table.Rows[0][0] + "', '" + record[1] + "', '" + record[2] + "');");*/
         }
 
 
