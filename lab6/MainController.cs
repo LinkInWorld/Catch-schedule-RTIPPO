@@ -14,9 +14,9 @@ namespace lab6
         public User user;
         public DataTable table = new DataTable();
 
-        public DataTable getListMunicipalContract()
+        public DataTable getListMunicipalContract(User user)
         {
-            table = DB.ListMunicipalContractsSelect();
+            table = DB.ListMunicipalContractsSelect(user);
             table.Columns["Number"].ColumnName = "Номер";
             table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
             table.Columns["Date_of_execution"].ColumnName = "Дата действия";

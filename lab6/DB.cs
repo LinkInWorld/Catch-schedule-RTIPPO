@@ -16,6 +16,7 @@ namespace lab6
         static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
+        static string sql;
         public static void openConnection()
         {
             connection.Open();
@@ -52,9 +53,8 @@ namespace lab6
             return table;
         }
 
-        public static DataTable ListMunicipalContractsSelect()
+        public static DataTable ListMunicipalContractsSelect(User user)
         {
-<<<<<<< HEAD
             if (user.role == 4 || user.role == 3 || user.role == 2)
             {
                 sql = "SELECT * FROM Municipal_contract";
@@ -63,9 +63,6 @@ namespace lab6
             {
                 sql = "SELECT * FROM Municipal_contract WHERE Customer =" + user.idOrganization + " OR Executor = " + user.idOrganization;
             }
-=======
-            string sql = "SELECT * FROM Municipal_contract";
->>>>>>> parent of 6b93255 (Разделение ролей при выводе муниципальных контрактов)
             DataTable table = SelectFromDB(sql);
             return table;
         }

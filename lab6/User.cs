@@ -4,6 +4,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
+
 
 namespace lab6
 {
@@ -13,7 +15,7 @@ namespace lab6
         public string surname;
         public string name;
         public string patronymic;
-        public int phone;
+        public string phone;
         public string email;
         public string login;
         public string password;
@@ -28,7 +30,7 @@ namespace lab6
                 surname = row[1].ToString();
                 name = row[2].ToString();
                 patronymic = row[3].ToString();
-                phone = int.Parse(row[4].ToString());
+                phone = row[4].ToString();
                 email = row[5].ToString();
                 login = row[6].ToString();
                 password = row[7].ToString();
