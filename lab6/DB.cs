@@ -66,6 +66,11 @@ namespace lab6
             DataTable table = SelectFromDB(sql);
             return table;
         }
+        public static DataTable ListOrganizationNameSelect()
+        {
+            string sql = "SELECT Name FROM Organization";
+            return SelectFromDB(sql);
+        }
 
         public static void SelectCreateMunicipalContract(ArrayList record)
         {
@@ -89,7 +94,13 @@ namespace lab6
         }
 
         // Никита
-
+        // Список населенных пунктов
+        public static DataTable ListLocaitySelect()
+        {
+            string sql = "SELECT [Locality].Name FROM Locality";
+            DataTable table = SelectFromDB(sql);
+            return table;
+        }
         public static string ExecuteQueryWithAnswer(string query)
         {
             openConnection();
@@ -143,13 +154,7 @@ namespace lab6
                 "Year = '" + record[2] +"' " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
         }
-        // Список населенных пунктов
-        public static DataTable ListLocaitySelect()
-        {
-            string sql = "SELECT [Locality].Name FROM Locality";
-            DataTable table = SelectFromDB(sql);
-            return table;
-        }
+       
         //  Фильтр/сортировка
         //  Название столбца для сортировки задается в свойствах radioButton.Tag
         public static DataTable ListPlanScheduleFilterSelect(string filter, string sort)

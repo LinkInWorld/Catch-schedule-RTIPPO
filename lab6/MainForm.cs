@@ -30,6 +30,8 @@ namespace lab6
         private void button1_Click(object sender, EventArgs e)
         {
             table = controller.getListMunicipalContract(user);
+            List<string> localityList = controller.getListOrganization();
+            AddExecutinContract.DataSource = localityList;
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
             dataGridView3.Update();
