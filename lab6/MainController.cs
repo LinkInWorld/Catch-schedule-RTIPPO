@@ -61,6 +61,11 @@ namespace lab6
             table = DB.ListPlanScheduleSelect();
             return table;
         }
+        public DataTable getListPlanScheduleFiltered(string filter, string sort)
+        {
+            table = DB.ListPlanScheduleFilterSelect(filter, sort);
+            return table;
+        }
         public List<string> getListlocality()
         {
             List<string> lst = new List<string>();

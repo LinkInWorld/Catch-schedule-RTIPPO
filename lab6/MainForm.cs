@@ -62,7 +62,11 @@ namespace lab6
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            List<string> localityList = controller.getListlocality();
+            catchScheduleComboBox1.DataSource = localityList;
+            dataGridView1.DataSource = controller.getListPlanSchedule();
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Update();
         }
 
         private void catchPlanScheduleButton1_Click(object sender, EventArgs e)
@@ -96,6 +100,29 @@ namespace lab6
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
             controller.getListPlanScheduleInserted(new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.Text, AddExecutinContract.Text });
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void catchPlanScheduleButton4_Click(object sender, EventArgs e)
+        {
+            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm();
+            planScheduleCardForm.Show();
+        }
+
+        private void catchPlanScheduleButton2_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = null;
+            string sort = "";
+            if (catchPlanScheduleRadioButton1.Checked) sort = catchPlanScheduleRadioButton1.Tag.ToString();
+            if (catchPlanScheduleRadioButton2.Checked) sort = catchPlanScheduleRadioButton2.Tag.ToString();
+            if (catchPlanScheduleRadioButton3.Checked) sort = catchPlanScheduleRadioButton3.Tag.ToString();
+            table = controller.getListPlanScheduleFiltered(catchSheduleTextBox2.Text, sort);
+            dataGridView1.DataSource = table;
+            dataGridView1.Columns[0].Visible = false;
         }
     }
 }
