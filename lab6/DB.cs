@@ -12,8 +12,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         public static void openConnection()
@@ -120,6 +120,12 @@ namespace lab6
                 "Month = '" + record[1] +"'," +
                 "Year = '" + record[2] +"' " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
+        }
+        public static DataTable ListLocaitySelect()
+        {
+            string sql = "SELECT [Locality].Name FROM Locality";
+            DataTable table = SelectFromDB(sql);
+            return table;
         }
     }
 }

@@ -57,5 +57,16 @@ namespace lab6
             table = DB.ListPlanScheduleSelect();
             return table;
         }
+        public List<string> getListlocality()
+        {
+            List<string> lst = new List<string>();
+            table = DB.ListLocaitySelect();
+            for(int i = 0; i < table.Rows.Count; i++)
+            {
+                lst.Add(table.Rows[i][0].ToString());
+            }
+            
+            return lst;
+        }
     }
 }
