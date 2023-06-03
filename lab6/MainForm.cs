@@ -51,9 +51,12 @@ namespace lab6
             //controller.getListPlanScheduleInserted(new ArrayList { "Тюмень", "May", "2077" });
             //controller.getListPlanScheduleUpdated(2,new ArrayList{"Тюмень", "May","2027"});
             //controller.getListPlanScheduleDeleted(2);
+            //catchScheduleComboBox1.DataSource= table;
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
         }
+
+
     }
 }
