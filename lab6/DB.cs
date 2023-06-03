@@ -46,6 +46,7 @@ namespace lab6
             return table;
         }
 
+        // Таня
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
@@ -57,31 +58,66 @@ namespace lab6
         {
             if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
-                sql = "SELECT * FROM Municipal_contract";
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization";
             }
             else
             {
-                sql = "SELECT * FROM Municipal_contract WHERE Customer =" + user.idOrganization + " OR Executor = " + user.idOrganization;
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization;
             }
             DataTable table = SelectFromDB(sql);
             return table;
         }
         public static DataTable ListOrganizationNameSelect()
         {
-            string sql = "SELECT Name FROM Organization";
+            string sql = "SELECT id_Organization, Name FROM Organization";
             return SelectFromDB(sql);
         }
 
         public static void SelectCreateMunicipalContract(ArrayList record)
         {
-            /*DataTable table = SelectFromDB(
-                "SELECT [Locality].id_Locality " +
-                "FROM Locality " +
-                "WHERE [Locality].Name = '" + record[0] + "'"
-                );
-            string sql = ExecuteQueryWithAnswer(
-                "INSERT INTO Plan_Schedule (id_Locality, Month, Year) " +
-                "VALUES ('" + table.Rows[0][0] + "', '" + record[1] + "', '" + record[2] + "');");*/
+            //НАПИСАТЬ КОД ДЛЯ ДОБАВЛЕНИЯ КОНТРАКТА
+            // И ДОБАВИТЬ ПОЛЯ ПО ВЫБОРУ ГОРОДА
+        }
+
+        public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
+        {
+            sql = "DELETE FROM Plan_Schedule WHERE id = " + id_MunicipalContract + ";";
+            // Написать чтоб отправляло в бд и возвращала ответ
+        }
+
+        public static DataTable SelectFilterSortMunicipalContract(string filter, string sort)
+        {
+            string cellValue = "";
+            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+                        "FROM Plan_Schedule, Locality " +
+                        "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
+
+            DataTable table = SelectFromDB(sql);
+            table.Columns[0].ColumnName = "id";
+            table.Columns[1].ColumnName = "Name";
+            table.Columns[2].ColumnName = "Month";
+            table.Columns[3].ColumnName = "Year";
+
+            if (filter != "")
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    for (int j = 0; j < table.Columns.Count; j++)
+                    {
+                        cellValue = table.Rows[i][j].ToString();
+                        if (cellValue.Contains(filter))
+                        {
+                            if (table.Columns[j].ColumnName.ToString() != "Name")
+                                sql += " AND [Plan_schedule]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            else
+                                sql += " AND [Locality]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                        }
+
+                    }
+                }
+
+            table = SelectFromDB(sql);
+            table.DefaultView.Sort = sort;
+            return table;
         }
 
 

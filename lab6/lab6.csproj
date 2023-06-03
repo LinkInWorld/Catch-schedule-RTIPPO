@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="MainController.cs" />
     <Compile Include="MunicipalContract.cs" />
+    <Compile Include="MunicipalContractController.cs" />
     <Compile Include="PlanScheduleCardForm.cs">
       <SubType>Form</SubType>
     </Compile>

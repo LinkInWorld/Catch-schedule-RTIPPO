@@ -12,6 +12,8 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Collections;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Reflection.Emit;
 
 namespace lab6
 {
@@ -21,23 +23,35 @@ namespace lab6
         DataTable table = new DataTable();
 
         MainController controller = new MainController();
+        MunicipalContractController MunicipalContractController = new MunicipalContractController();
         public MainForm(User user)
         {
             this.user = user;
             InitializeComponent();
         }
-
+        // Таня
         private void button1_Click(object sender, EventArgs e)
         {
-            table = controller.getListMunicipalContract(user);
-            List<string> localityList = controller.getListOrganization();
-            AddExecutinContract.DataSource = localityList;
+            table = MunicipalContractController.getListMunicipalContract(user);
+
+            AddCustomerContract.DataSource = MunicipalContractController.getListOrganization();
+            AddCustomerContract.DisplayMember = "Name";
+            AddCustomerContract.ValueMember = "id_Organization";
+            AddExecutinContract.DataSource = MunicipalContractController.getListOrganization();
+            AddExecutinContract.DisplayMember = "Name";
+            AddExecutinContract.ValueMember = "id_Organization";
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
             dataGridView3.Update();
             tabControl1.SelectTab(tabPage3);
         }
 
+        private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
+        {
+            MunicipalContractController.CreateMunicipalContract(new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() });
+        }
+
+        // Илья
         private void button2_Click(object sender, EventArgs e)
         {
             table = controller.getListOrganizationContract();
@@ -48,6 +62,7 @@ namespace lab6
             tabControl1.SelectTab(tabPage2);
         }
 
+        //Никита
         private void button3_Click(object sender, EventArgs e)
         {
             table = controller.getListPlanSchedule();
@@ -100,10 +115,6 @@ namespace lab6
 
         }
 
-        private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
-        {
-            controller.getListPlanScheduleInserted(new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.Text, AddExecutinContract.Text });
-        }
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
@@ -132,6 +143,16 @@ namespace lab6
             table = controller.getListPlanScheduleFiltered(catchSheduleTextBox2.Text, sort);
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
