@@ -30,18 +30,18 @@ namespace lab6
         private void button1_Click(object sender, EventArgs e)
         {
             table = controller.getListMunicipalContract();
-            dataGridView1.DataSource = table;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Update();
+            dataGridView3.DataSource = table;
+            dataGridView3.Columns[0].Visible = false;
+            dataGridView3.Update();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             table = controller.getListOrganizationContract();
 
-            dataGridView1.DataSource = table;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Update();
+            dataGridView2.DataSource = table;
+            dataGridView2.Columns[0].Visible = false;
+            dataGridView2.Update();
         }
 
         private void button3_Click(object sender, EventArgs e)
