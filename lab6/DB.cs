@@ -90,6 +90,8 @@ namespace lab6
             DataTable table = SelectFromDB(sql);
             return table;
         }
+
+        //Добавление записи в бд по списку значений
         public static void ListPlanScheduleInsert(ArrayList record) 
         {
             DataTable table = SelectFromDB(
@@ -101,12 +103,14 @@ namespace lab6
                 "INSERT INTO Plan_Schedule (id_Locality, Month, Year) " +
                 "VALUES ('" + table.Rows[0][0] + "', '" + record[1] + "', '" + record[2] + "');");
         }
+        //Удаление записи из бд по id
         public static void ListPlanScheduleDelete(int idSelectedPlanSchedule) 
         {
             string sql = ExecuteQueryWithAnswer(
                 "DELETE FROM Plan_Schedule " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
         }
+        // Редактирование таблицы по id и списку значений
         public static void ListPlanScheduleUpdate(int idSelectedPlanSchedule, ArrayList record)
         {
             DataTable table = SelectFromDB(
@@ -121,10 +125,47 @@ namespace lab6
                 "Year = '" + record[2] +"' " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
         }
+        // Список населенных пунктов
         public static DataTable ListLocaitySelect()
         {
             string sql = "SELECT [Locality].Name FROM Locality";
             DataTable table = SelectFromDB(sql);
+            return table;
+        }
+        //  Фильтр/сортировка
+        //  Название столбца для сортировки задается в свойствах radioButton.Tag
+        public static DataTable ListPlanScheduleFilterSelect(string filter, string sort)
+        {
+            string cellValue = "";
+            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+                        "FROM Plan_Schedule, Locality " +
+                        "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
+
+            DataTable table = SelectFromDB(sql);
+            table.Columns[0].ColumnName = "id";
+            table.Columns[1].ColumnName = "Name";
+            table.Columns[2].ColumnName = "Month";
+            table.Columns[3].ColumnName = "Year";
+
+            if(filter != "")
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    for (int j = 0; j < table.Columns.Count; j++)
+                    {
+                        cellValue = table.Rows[i][j].ToString();
+                        if (cellValue.Contains(filter))
+                        {
+                            if (table.Columns[j].ColumnName.ToString() != "Name")
+                                sql += " AND [Plan_schedule]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            else
+                                sql += " AND [Locality]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                        }
+
+                    }
+                }
+            
+            table = SelectFromDB(sql);
+            table.DefaultView.Sort = sort;
             return table;
         }
     }
