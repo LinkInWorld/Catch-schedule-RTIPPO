@@ -55,7 +55,7 @@ namespace lab6
 
         public static DataTable ListMunicipalContractsSelect(User user)
         {
-            if (user.role == 4 || user.role == 3 || user.role == 2)
+            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
                 sql = "SELECT * FROM Municipal_contract";
             }

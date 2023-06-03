@@ -20,7 +20,7 @@ namespace lab6
         public string login;
         public string password;
         public int idOrganization;
-        public int role;
+        public Role role;
 
         public User(DataTable table)
         {
@@ -35,7 +35,7 @@ namespace lab6
                 login = row[6].ToString();
                 password = row[7].ToString();
                 idOrganization = Convert.ToInt32(row[8].ToString());
-                role = Convert.ToInt32(row[9].ToString());
+                role = new Role(int.Parse(row[9].ToString()), row[11].ToString());
             }
 
         }
