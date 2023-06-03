@@ -188,5 +188,13 @@ namespace lab6
             table.DefaultView.Sort = sort;
             return table;
         }
+        public static DataTable ListDataPlanScheduleCard(string idSelectedPlanSchedule)
+        {
+            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+                        "FROM Plan_Schedule, Locality " +
+                        "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality AND [Plan_Schedule].id = '" + idSelectedPlanSchedule + "'";
+            DataTable table = SelectFromDB(sql);
+            return table;
+        }
     }
 }

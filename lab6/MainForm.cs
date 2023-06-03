@@ -67,6 +67,7 @@ namespace lab6
             dataGridView1.DataSource = controller.getListPlanSchedule();
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         private void catchPlanScheduleButton1_Click(object sender, EventArgs e)
@@ -106,13 +107,19 @@ namespace lab6
         {
 
         }
-
+        Thread th;
         private void catchPlanScheduleButton4_Click(object sender, EventArgs e)
         {
-            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm();
-            planScheduleCardForm.Show();
+            
+            table = controller.getDataPlanScheduleCard(dataGridView1.SelectedCells[0].Value.ToString());
+            th = new Thread(open);
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
         }
-
+        void open(object obj)
+        {
+            Application.Run(new PlanScheduleCardForm(table));
+        }
         private void catchPlanScheduleButton2_Click(object sender, EventArgs e)
         {
             dataGridView1.DataSource = null;
