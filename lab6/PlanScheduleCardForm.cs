@@ -18,7 +18,7 @@ namespace lab6
         public DataTable table;
         public User user;
 
-        MainController controller = new MainController();
+        PlanScheduleController planSchController = new PlanScheduleController();
         public PlanScheduleCardForm(DataTable table, User user)
         { 
             this.table = table;
@@ -30,7 +30,7 @@ namespace lab6
         private void button1_Click(object sender, EventArgs e)
         {
             MainForm main = this.Owner as MainForm;
-            table = controller.getListPlanScheduleUpdated(Convert.ToInt32(textBox1.Text), new ArrayList { comboBox2.SelectedItem, comboBox1.SelectedItem , textBox4.Text });
+            table = planSchController.getListPlanScheduleUpdated(user, Convert.ToInt32(textBox1.Text), new ArrayList { comboBox2.SelectedItem, comboBox1.SelectedItem , textBox4.Text, textBox2.Text });
             main.dataGridView1.DataSource = table;
         }
 
@@ -41,7 +41,7 @@ namespace lab6
 
         private void PlanScheduleCardForm_Load(object sender, EventArgs e)
         {
-            List<string> localityList = controller.getListlocality();
+            List<string> localityList = planSchController.getListlocality();
             
             comboBox2.DataSource = localityList;
             foreach (DataRow row in table.Rows)
@@ -50,7 +50,7 @@ namespace lab6
                 comboBox2.SelectedItem = row[1].ToString();
                 comboBox1.SelectedItem = row[2].ToString();
                 textBox4.Text = row[3].ToString();
-                
+                textBox2.Text = row[4].ToString();
             }
             userRoleLabel1.Text = user.role.name;
             if (user.role.name != "Оператор по отлову")
@@ -79,6 +79,20 @@ namespace lab6
         {
             
             groupBox1.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog OPF = new OpenFileDialog();
+            if (OPF.ShowDialog() == DialogResult.OK)
+            {
+                textBox2.Text = OPF.FileName;
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

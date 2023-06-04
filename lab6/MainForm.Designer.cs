@@ -52,7 +52,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.catchPlanScheduleGroupBox2 = new System.Windows.Forms.GroupBox();
-            this.ExceptionLabel2 = new System.Windows.Forms.Label();
             this.catchPlanScheduleButton2 = new System.Windows.Forms.Button();
             this.catchPlanScheduleRadioButton3 = new System.Windows.Forms.RadioButton();
             this.catchPlanScheduleRadioButton2 = new System.Windows.Forms.RadioButton();
@@ -377,7 +376,6 @@
             // 
             // catchPlanScheduleGroupBox2
             // 
-            this.catchPlanScheduleGroupBox2.Controls.Add(this.ExceptionLabel2);
             this.catchPlanScheduleGroupBox2.Controls.Add(this.catchPlanScheduleButton2);
             this.catchPlanScheduleGroupBox2.Controls.Add(this.catchPlanScheduleRadioButton3);
             this.catchPlanScheduleGroupBox2.Controls.Add(this.catchPlanScheduleRadioButton2);
@@ -393,16 +391,6 @@
             this.catchPlanScheduleGroupBox2.TabIndex = 1;
             this.catchPlanScheduleGroupBox2.TabStop = false;
             this.catchPlanScheduleGroupBox2.Text = "Фильтр/Сортировка";
-            // 
-            // ExceptionLabel2
-            // 
-            this.ExceptionLabel2.AutoSize = true;
-            this.ExceptionLabel2.Location = new System.Drawing.Point(116, 177);
-            this.ExceptionLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ExceptionLabel2.Name = "ExceptionLabel2";
-            this.ExceptionLabel2.Size = new System.Drawing.Size(30, 16);
-            this.ExceptionLabel2.TabIndex = 8;
-            this.ExceptionLabel2.Text = "Null";
             // 
             // catchPlanScheduleButton2
             // 
@@ -964,7 +952,6 @@
         private System.Windows.Forms.Label selectedIdLabel;
         private System.Windows.Forms.Button catchPlanScheduleButton4;
         private System.Windows.Forms.Button catchPlanScheduleButton3;
-        private System.Windows.Forms.Label ExceptionLabel2;
         private System.Windows.Forms.Button catchPlanScheduleButton2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
