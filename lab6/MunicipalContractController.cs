@@ -45,7 +45,7 @@ namespace lab6
             return table;
         }
 
-        public DataTable CreateMunicipalContract(ArrayList record, SelectedObjectCollection arrayLocalityContract)
+        public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
 
             DB.SelectCreateMunicipalContract(record, arrayLocalityContract);

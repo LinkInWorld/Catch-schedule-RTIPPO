@@ -73,23 +73,20 @@ namespace lab6
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
             ArrayList arrayLocalityContract = new ArrayList();
-            var varit = AddLocalityContract.SelectedItems;
-            //SelectedIndexCollection selectedObject = AddLocalityContract.SelectedIndices;
-            var tt = "";
-            foreach (DataRowView i in varit)
+            var selectedObject = AddLocalityContract.SelectedItems;
+            var val = "";
+            foreach (DataRowView i in selectedObject)
             {
-                tt = i.Row.ItemArray[1].ToString();
-
-                /*string val = AddLocalityContract.Items[i].ToString();
-                arrayLocalityContract.Add(val);*/
+                val = i.Row.ItemArray[1].ToString();
+                arrayLocalityContract.Add(val);
             }
-            MessageBox.Show(tt);
-            /*ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
-            table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, AddLocalityContract.SelectedItems);
+            //MessageBox.Show(arrayLocalityContract[0].ToString());
+            ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
+            table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, arrayLocalityContract);
             dataGridView3.DataSource = null;
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
-            dataGridView3.Update();*/
+            dataGridView3.Update();
 
         }
 

@@ -71,21 +71,22 @@ namespace lab6
             string cellValue = "";
             if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
-                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization";
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization ";
             }
             else
             {
-                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization +")";
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization + ") ";
             }
             DataTable table = SelectFromDB(sql);
             table.Columns[0].ColumnName = "id_MunicipalContract";
             table.Columns[1].ColumnName = "Number";
             table.Columns[2].ColumnName = "Date_of_conclusion";
             table.Columns[3].ColumnName = "Date_of_execution";
-            table.Columns[4].ColumnName = "Customer";
-            table.Columns[5].ColumnName = "Executor";
+            table.Columns[4].ColumnName = "o1.Name";
+            table.Columns[5].ColumnName = "o2.Name";
             if (filt != "")
             {
+
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     for (int j = 0; j < table.Columns.Count; j++)
@@ -93,18 +94,16 @@ namespace lab6
                         cellValue = table.Rows[i][j].ToString();
                         if (cellValue.Contains(filt))
                         {
-                            if (table.Columns[j].ColumnName.ToString() == "Customer")
-                                sql += " AND Organization." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            else if (table.Columns[j].ColumnName.ToString() == "Executor")
-                                sql += " AND Organization." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            else
-                                sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            /*if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
-                                sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            if (table.Columns[j].ColumnName.ToString() == "Customer")
-                                sql += " AND " + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            if (table.Columns[j].ColumnName.ToString() == "Executor")
-                                sql += " AND " + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";*/
+                            if (table.Columns[j].ColumnName.ToString() == "Number")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Date_of_conclusion")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "o1.Name")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "o2.Name")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
                         }
 
                     }
@@ -126,17 +125,17 @@ namespace lab6
             return table;
         }
 
-        public static void SelectCreateMunicipalContract(ArrayList record, SelectedObjectCollection arrayLocalityContract)
+        public static void SelectCreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
             try
             {
                 ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', " + Convert.ToInt32(record[3]) + ", " + Convert.ToInt32(record[4]) + ")");
-                //DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
-                foreach (object nameLocality in arrayLocalityContract)
+                DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
+                foreach (var nameLocality in arrayLocalityContract)
                 {
-                    MessageBox.Show(nameLocality.ToString());
-                    //DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = " + nameLocality);
-                    //ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + infoLocality.Rows[0][0] + ", " + idNewContract.Rows[0][0] + ", " + infoLocality.Rows[0][2] + ")");
+                    //MessageBox.Show(nameLocality.ToString());
+                    DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + nameLocality+"'");
+                    ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + infoLocality.Rows[0][0] + ", " + idNewContract.Rows[0][0] + ", " + infoLocality.Rows[0][2] + ")");
                 }
             }
             catch
