@@ -84,7 +84,7 @@ namespace lab6
             dataGridView1.DataSource = controller.getListPlanSchedule();
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         private void catchPlanScheduleButton1_Click(object sender, EventArgs e)
@@ -125,13 +125,10 @@ namespace lab6
         {
             
             table = controller.getDataPlanScheduleCard(dataGridView1.SelectedCells[0].Value.ToString());
-            th = new Thread(open);
-            th.SetApartmentState(ApartmentState.STA);
-            th.Start();
-        }
-        void open(object obj)
-        {
-            Application.Run(new PlanScheduleCardForm(table));
+            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm(table);
+            planScheduleCardForm.Owner= this;
+            planScheduleCardForm.ShowDialog();
+
         }
         private void catchPlanScheduleButton2_Click(object sender, EventArgs e)
         {
@@ -153,6 +150,23 @@ namespace lab6
         private void groupBox4_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void selectedIdLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void catchPlanScheduleButton5_Click(object sender, EventArgs e)
+        {
+            table = controller.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()));
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = table;
+            dataGridView1.Columns[0].Visible = false;
+        }
+        private void dataGridView1_CellClick(object sender,DataGridViewCellEventArgs e)
+        {
+            selectedIdLabel.Text = dataGridView1.SelectedCells[0].Value.ToString();
         }
     }
 }

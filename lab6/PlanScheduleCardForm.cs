@@ -16,17 +16,21 @@ namespace lab6
     public partial class PlanScheduleCardForm : Form
     {
         public DataTable table;
+
         MainController controller = new MainController();
         public PlanScheduleCardForm(DataTable table)
         { 
             this.table = table;
 
             InitializeComponent();
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            MainForm main = this.Owner as MainForm;
+            table = controller.getListPlanScheduleUpdated(Convert.ToInt32(textBox1.Text), new ArrayList { comboBox2.SelectedItem, comboBox1.SelectedItem , textBox4.Text });
+            main.dataGridView1.DataSource = table;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -47,13 +51,7 @@ namespace lab6
                 textBox4.Text = row[3].ToString();
                 
             }
-            MessageBox.Show(table.Rows.Count.ToString());
-            
-            //ArrayList record = controller.record;
-            
-            //comboBox2.SelectedItem = record[1].ToString();
-            //comboBox1.SelectedItem = record[2].ToString();
-            //textBox4.Text= record[3].ToString();
+          
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
