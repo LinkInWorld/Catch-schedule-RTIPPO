@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
+using static System.Windows.Forms.ListBox;
 
 namespace lab6
 {
@@ -46,6 +47,9 @@ namespace lab6
             AddExecutinContract.DataSource = MunicipalContractController.getListOrganization();
             AddExecutinContract.DisplayMember = "Name";
             AddExecutinContract.ValueMember = "id_Organization";
+            AddLocalityContract.DataSource = MunicipalContractController.getListLocaity();
+            AddLocalityContract.DisplayMember = "Name";
+            AddLocalityContract.ValueMember = "id_Locality";
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
             dataGridView3.Update();
@@ -68,7 +72,25 @@ namespace lab6
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
-            //MunicipalContractController.CreateMunicipalContract(new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() });
+            ArrayList arrayLocalityContract = new ArrayList();
+            var varit = AddLocalityContract.SelectedItems;
+            //SelectedIndexCollection selectedObject = AddLocalityContract.SelectedIndices;
+            var tt = "";
+            foreach (DataRowView i in varit)
+            {
+                tt = i.Row.ItemArray[1].ToString();
+
+                /*string val = AddLocalityContract.Items[i].ToString();
+                arrayLocalityContract.Add(val);*/
+            }
+            MessageBox.Show(tt);
+            /*ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
+            table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, AddLocalityContract.SelectedItems);
+            dataGridView3.DataSource = null;
+            dataGridView3.DataSource = table;
+            dataGridView3.Columns[0].Visible = false;
+            dataGridView3.Update();*/
+
         }
 
         private void ButtonDeleteMunicipalContract_Click_1(object sender, EventArgs e)
@@ -101,6 +123,11 @@ namespace lab6
             table = table.DefaultView.ToTable();
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
+
+        }
+
+        private void button4_Click(object sender, EventArgs e) //открытие карточки
+        {
 
         }
 
@@ -228,6 +255,5 @@ namespace lab6
             selectedIdLabel.Text = dataGridView1.SelectedCells[0].Value.ToString();
         }
 
-       
     }
 }

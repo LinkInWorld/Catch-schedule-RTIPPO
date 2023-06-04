@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListBox;
 using DataTable = System.Data.DataTable;
 
 namespace lab6
@@ -38,12 +39,24 @@ namespace lab6
             return table;
         }
 
-       /* public DataTable CreateMunicipalContract(ArrayList record)
+        public DataTable getListLocaity()
+        {
+            table = DB.ListLocalitySelectid_Locality();
+            return table;
+        }
+
+        public DataTable CreateMunicipalContract(ArrayList record, SelectedObjectCollection arrayLocalityContract)
         {
 
-            DB.SelectCreateMunicipalContract(record);
-            return getListMunicipalContract(user, filtr, sort);
-        }*/
+            DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
+            table = DB.ListMunicipalContractsSelect(user, filt);
+            table.Columns["Number"].ColumnName = "Номер";
+            table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
+            table.Columns["Date_of_execution"].ColumnName = "Дата действия";
+            table.Columns["Customer"].ColumnName = "Заказчик";
+            table.Columns["Executor"].ColumnName = "Исполнитель";
+            return table;
+        }
 
         public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
         {

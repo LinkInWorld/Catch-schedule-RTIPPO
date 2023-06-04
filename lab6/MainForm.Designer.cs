@@ -66,7 +66,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.AddDateExeContract = new System.Windows.Forms.TextBox();
             this.AddDateConContract = new System.Windows.Forms.TextBox();
@@ -82,7 +81,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ButtonDeleteMunicipalContract = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.buttonOpenCard = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.SortradioButtonDateExecute = new System.Windows.Forms.RadioButton();
@@ -95,6 +94,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.AddLocalityContract = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.catchPlanGroupBox.SuspendLayout();
             this.catchPlanScheduleGroupBox3.SuspendLayout();
@@ -548,7 +548,7 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Controls.Add(this.AddLocalityContract);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.AddDateExeContract);
             this.groupBox3.Controls.Add(this.AddDateConContract);
@@ -570,20 +570,10 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Добавить";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.CausesValidation = false;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(140, 191);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(166, 24);
-            this.comboBox1.TabIndex = 13;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 199);
+            this.label1.Location = new System.Drawing.Point(9, 179);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 16);
@@ -592,7 +582,7 @@
             // 
             // AddDateExeContract
             // 
-            this.AddDateExeContract.Location = new System.Drawing.Point(139, 97);
+            this.AddDateExeContract.Location = new System.Drawing.Point(139, 77);
             this.AddDateExeContract.Margin = new System.Windows.Forms.Padding(4);
             this.AddDateExeContract.Name = "AddDateExeContract";
             this.AddDateExeContract.Size = new System.Drawing.Size(166, 22);
@@ -600,7 +590,7 @@
             // 
             // AddDateConContract
             // 
-            this.AddDateConContract.Location = new System.Drawing.Point(139, 67);
+            this.AddDateConContract.Location = new System.Drawing.Point(139, 47);
             this.AddDateConContract.Margin = new System.Windows.Forms.Padding(4);
             this.AddDateConContract.Name = "AddDateConContract";
             this.AddDateConContract.Size = new System.Drawing.Size(166, 22);
@@ -609,7 +599,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 167);
+            this.label11.Location = new System.Drawing.Point(9, 147);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(70, 16);
@@ -619,7 +609,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(9, 100);
+            this.label18.Location = new System.Drawing.Point(9, 80);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(103, 16);
@@ -639,7 +629,7 @@
             // 
             // AddNomerContract
             // 
-            this.AddNomerContract.Location = new System.Drawing.Point(139, 37);
+            this.AddNomerContract.Location = new System.Drawing.Point(139, 17);
             this.AddNomerContract.Margin = new System.Windows.Forms.Padding(4);
             this.AddNomerContract.Name = "AddNomerContract";
             this.AddNomerContract.Size = new System.Drawing.Size(166, 22);
@@ -649,7 +639,7 @@
             // 
             this.AddCustomerContract.CausesValidation = false;
             this.AddCustomerContract.FormattingEnabled = true;
-            this.AddCustomerContract.Location = new System.Drawing.Point(139, 127);
+            this.AddCustomerContract.Location = new System.Drawing.Point(139, 107);
             this.AddCustomerContract.Margin = new System.Windows.Forms.Padding(4);
             this.AddCustomerContract.Name = "AddCustomerContract";
             this.AddCustomerContract.Size = new System.Drawing.Size(166, 24);
@@ -658,7 +648,7 @@
             // AddExecutinContract
             // 
             this.AddExecutinContract.FormattingEnabled = true;
-            this.AddExecutinContract.Location = new System.Drawing.Point(140, 159);
+            this.AddExecutinContract.Location = new System.Drawing.Point(140, 139);
             this.AddExecutinContract.Margin = new System.Windows.Forms.Padding(4);
             this.AddExecutinContract.Name = "AddExecutinContract";
             this.AddExecutinContract.Size = new System.Drawing.Size(166, 24);
@@ -667,7 +657,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(9, 73);
+            this.label12.Location = new System.Drawing.Point(9, 53);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(122, 16);
@@ -677,7 +667,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(9, 135);
+            this.label13.Location = new System.Drawing.Point(9, 115);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(94, 16);
@@ -687,7 +677,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 43);
+            this.label14.Location = new System.Drawing.Point(9, 23);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(50, 16);
@@ -699,7 +689,7 @@
             // 
             this.groupBox2.Controls.Add(this.ButtonDeleteMunicipalContract);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.buttonOpenCard);
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Location = new System.Drawing.Point(8, 522);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
@@ -731,15 +721,16 @@
             this.label9.TabIndex = 14;
             this.label9.Text = "Выберите строку в реестре";
             // 
-            // button4
+            // buttonOpenCard
             // 
-            this.button4.Location = new System.Drawing.Point(8, 58);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(82, 28);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Открыть";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonOpenCard.Location = new System.Drawing.Point(8, 58);
+            this.buttonOpenCard.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonOpenCard.Name = "buttonOpenCard";
+            this.buttonOpenCard.Size = new System.Drawing.Size(82, 28);
+            this.buttonOpenCard.TabIndex = 3;
+            this.buttonOpenCard.Text = "Открыть";
+            this.buttonOpenCard.UseVisualStyleBackColor = true;
+            this.buttonOpenCard.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -811,7 +802,7 @@
             // SortradioButtonExecute
             // 
             this.SortradioButtonExecute.AutoSize = true;
-            this.SortradioButtonExecute.Location = new System.Drawing.Point(156, 34);
+            this.SortradioButtonExecute.Location = new System.Drawing.Point(186, 34);
             this.SortradioButtonExecute.Margin = new System.Windows.Forms.Padding(4);
             this.SortradioButtonExecute.Name = "SortradioButtonExecute";
             this.SortradioButtonExecute.Size = new System.Drawing.Size(115, 20);
@@ -823,7 +814,7 @@
             // SortradioButtonCalcute
             // 
             this.SortradioButtonCalcute.AutoSize = true;
-            this.SortradioButtonCalcute.Location = new System.Drawing.Point(156, 63);
+            this.SortradioButtonCalcute.Location = new System.Drawing.Point(186, 63);
             this.SortradioButtonCalcute.Margin = new System.Windows.Forms.Padding(4);
             this.SortradioButtonCalcute.Name = "SortradioButtonCalcute";
             this.SortradioButtonCalcute.Size = new System.Drawing.Size(91, 20);
@@ -836,7 +827,7 @@
             // SortradioButtonNumber
             // 
             this.SortradioButtonNumber.AutoSize = true;
-            this.SortradioButtonNumber.Location = new System.Drawing.Point(156, 91);
+            this.SortradioButtonNumber.Location = new System.Drawing.Point(186, 91);
             this.SortradioButtonNumber.Margin = new System.Windows.Forms.Padding(4);
             this.SortradioButtonNumber.Name = "SortradioButtonNumber";
             this.SortradioButtonNumber.Size = new System.Drawing.Size(71, 20);
@@ -884,6 +875,16 @@
             this.dataGridView3.RowTemplate.Height = 24;
             this.dataGridView3.Size = new System.Drawing.Size(756, 620);
             this.dataGridView3.TabIndex = 0;
+            // 
+            // AddLocalityContract
+            // 
+            this.AddLocalityContract.FormattingEnabled = true;
+            this.AddLocalityContract.ItemHeight = 16;
+            this.AddLocalityContract.Location = new System.Drawing.Point(140, 179);
+            this.AddLocalityContract.Name = "AddLocalityContract";
+            this.AddLocalityContract.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.AddLocalityContract.Size = new System.Drawing.Size(165, 52);
+            this.AddLocalityContract.TabIndex = 13;
             // 
             // MainForm
             // 
@@ -965,7 +966,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonOpenCard;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button ButtonSortFiltrMunicipalContract;
@@ -989,7 +990,7 @@
         public System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button catchPlanScheduleButton5;
         private System.Windows.Forms.Label ExceptionLabel3;
-        public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox AddLocalityContract;
     }
 }

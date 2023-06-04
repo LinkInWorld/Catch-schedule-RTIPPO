@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.ListBox;
 using DataTable = System.Data.DataTable;
 
 namespace lab6
@@ -77,7 +78,13 @@ namespace lab6
                 sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization +")";
             }
             DataTable table = SelectFromDB(sql);
-            if(filt != "")
+            table.Columns[0].ColumnName = "id_MunicipalContract";
+            table.Columns[1].ColumnName = "Number";
+            table.Columns[2].ColumnName = "Date_of_conclusion";
+            table.Columns[3].ColumnName = "Date_of_execution";
+            table.Columns[4].ColumnName = "Customer";
+            table.Columns[5].ColumnName = "Executor";
+            if (filt != "")
             {
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
@@ -86,15 +93,24 @@ namespace lab6
                         cellValue = table.Rows[i][j].ToString();
                         if (cellValue.Contains(filt))
                         {
-                            if (table.Columns[j].ColumnName.ToString() != "Number")
-                                sql += " AND Number." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Customer")
+                                sql += " AND Organization." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            else if (table.Columns[j].ColumnName.ToString() == "Executor")
+                                sql += " AND Organization." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
                             else
-                                sql += " AND Date_of_conclusion." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                                sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            /*if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
+                                sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Customer")
+                                sql += " AND " + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Executor")
+                                sql += " AND " + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";*/
                         }
 
                     }
                 }
             }
+            table = SelectFromDB(sql);
             return table;
         }
         public static DataTable ListOrganizationNameSelect()
@@ -103,10 +119,31 @@ namespace lab6
             return SelectFromDB(sql);
         }
 
-        public static void SelectCreateMunicipalContract(ArrayList record)
+        public static DataTable ListLocalitySelectid_Locality()
         {
-            //НАПИСАТЬ КОД ДЛЯ ДОБАВЛЕНИЯ КОНТРАКТА
-            // И ДОБАВИТЬ ПОЛЯ ПО ВЫБОРУ ГОРОДА
+            string sql = "SELECT id_Locality, Name FROM Locality";
+            DataTable table = SelectFromDB(sql);
+            return table;
+        }
+
+        public static void SelectCreateMunicipalContract(ArrayList record, SelectedObjectCollection arrayLocalityContract)
+        {
+            try
+            {
+                ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', " + Convert.ToInt32(record[3]) + ", " + Convert.ToInt32(record[4]) + ")");
+                //DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
+                foreach (object nameLocality in arrayLocalityContract)
+                {
+                    MessageBox.Show(nameLocality.ToString());
+                    //DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = " + nameLocality);
+                    //ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + infoLocality.Rows[0][0] + ", " + idNewContract.Rows[0][0] + ", " + infoLocality.Rows[0][2] + ")");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Произошла ошибка");
+            }
+            //НАПИСАТЬ КОД ДЛЯ добавления другой таблички контракта
         }
 
         public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
