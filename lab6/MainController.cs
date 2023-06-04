@@ -25,30 +25,31 @@ namespace lab6
 
             return table;
         }
-        public DataTable getListPlanSchedule()
+        public DataTable getListPlanSchedule(User user)
         {
-            table = DB.ListPlanScheduleSelect();
+            MessageBox.Show(user.role.id.ToString());
+            table = DB.ListPlanScheduleSelect(user);
             return table;
         }
         public DataTable getListPlanScheduleDeleted(int idSelectedPlanSchedule)
         {
 
             DB.ListPlanScheduleDelete(idSelectedPlanSchedule);
-            table = DB.ListPlanScheduleSelect();
+            table = DB.ListPlanScheduleSelect(user);
             return table;
         }
         public DataTable getListPlanScheduleInserted(ArrayList record)
         {
 
             DB.ListPlanScheduleInsert(record);
-            table = DB.ListPlanScheduleSelect();
+            table = DB.ListPlanScheduleSelect(user);
             return table;
         }
         public DataTable getListPlanScheduleUpdated(int idSelectedPlanSchedule,ArrayList record)
         {
 
             DB.ListPlanScheduleUpdate(idSelectedPlanSchedule, record);
-            table = DB.ListPlanScheduleSelect();
+            table = DB.ListPlanScheduleSelect(user);
             return table;
         }
         public DataTable getListPlanScheduleFiltered(string filter, string sort)

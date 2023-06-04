@@ -93,6 +93,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.ExceptionLabel3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.catchPlanGroupBox.SuspendLayout();
             this.catchPlanScheduleGroupBox3.SuspendLayout();
@@ -170,6 +171,7 @@
             // 
             // catchPlanScheduleGroupBox3
             // 
+            this.catchPlanScheduleGroupBox3.Controls.Add(this.ExceptionLabel3);
             this.catchPlanScheduleGroupBox3.Controls.Add(this.catchPlanScheduleButton5);
             this.catchPlanScheduleGroupBox3.Controls.Add(this.label8);
             this.catchPlanScheduleGroupBox3.Controls.Add(this.label7);
@@ -196,7 +198,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(10, 69);
+            this.label8.Location = new System.Drawing.Point(10, 101);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(19, 13);
             this.label8.TabIndex = 15;
@@ -214,7 +216,7 @@
             // selectedIdLabel
             // 
             this.selectedIdLabel.AutoSize = true;
-            this.selectedIdLabel.Location = new System.Drawing.Point(35, 69);
+            this.selectedIdLabel.Location = new System.Drawing.Point(35, 101);
             this.selectedIdLabel.Name = "selectedIdLabel";
             this.selectedIdLabel.Size = new System.Drawing.Size(77, 13);
             this.selectedIdLabel.TabIndex = 13;
@@ -795,6 +797,15 @@
             this.dataGridView3.Size = new System.Drawing.Size(594, 504);
             this.dataGridView3.TabIndex = 0;
             // 
+            // ExceptionLabel3
+            // 
+            this.ExceptionLabel3.AutoSize = true;
+            this.ExceptionLabel3.Location = new System.Drawing.Point(10, 64);
+            this.ExceptionLabel3.Name = "ExceptionLabel3";
+            this.ExceptionLabel3.Size = new System.Drawing.Size(25, 13);
+            this.ExceptionLabel3.TabIndex = 8;
+            this.ExceptionLabel3.Text = "Null";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -899,5 +910,6 @@
         public System.Windows.Forms.TabControl tabControl1;
         public System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button catchPlanScheduleButton5;
+        private System.Windows.Forms.Label ExceptionLabel3;
     }
 }

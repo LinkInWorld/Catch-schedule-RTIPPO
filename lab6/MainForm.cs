@@ -65,25 +65,29 @@ namespace lab6
         //Никита
         private void button3_Click(object sender, EventArgs e)
         {
-            table = controller.getListPlanSchedule();
-            List<string> localityList= controller.getListlocality();
-            //controller.getListPlanScheduleInserted(new ArrayList { "Тюмень", "May", "2077" });
-            //controller.getListPlanScheduleUpdated(2,new ArrayList{"Тюмень", "May","2027"});
-            //controller.getListPlanScheduleDeleted(2);
-            catchScheduleComboBox1.DataSource= localityList;
-            dataGridView1.DataSource = table;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Update();
+            List<string> localityList = controller.getListlocality();
+            catchScheduleComboBox1.DataSource = localityList;
+            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            {
+                dataGridView1.DataSource = controller.getListPlanSchedule(user);
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Update();
+            }
+                
+            if (user.role.name != "Куратор по отлову")
+            {
+                ExceptionLabel1.Text = "Нет прав на добавление";
+                ExceptionLabel3.Text = "Нет прав на удаление";
+                catchPlanScheduleButton1.Enabled = false;
+                catchPlanScheduleButton5.Enabled = false;
+            }
             tabControl1.SelectTab(tabPage1);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            List<string> localityList = controller.getListlocality();
-            catchScheduleComboBox1.DataSource = localityList;
-            dataGridView1.DataSource = controller.getListPlanSchedule();
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Update();
+            
+                
             //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
@@ -99,7 +103,7 @@ namespace lab6
             }
             else
                 ExceptionLabel1.Text = "Некорректный формат года";
-            table = controller.getListPlanSchedule();
+            table = controller.getListPlanSchedule(user);
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
@@ -125,7 +129,7 @@ namespace lab6
         {
             
             table = controller.getDataPlanScheduleCard(dataGridView1.SelectedCells[0].Value.ToString());
-            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm(table);
+            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm(table, user);
             planScheduleCardForm.Owner= this;
             planScheduleCardForm.ShowDialog();
 

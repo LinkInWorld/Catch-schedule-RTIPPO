@@ -147,13 +147,28 @@ namespace lab6
             if (answer != null) return answer.ToString();
             else return null;
         }
-        public static DataTable ListPlanScheduleSelect()
+        public static DataTable ListPlanScheduleSelect(User user)
         {
-            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+            
+            DataTable table = new DataTable();  
+            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы" || user.role.name == "Куратор по отлову")
+            {
+                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
                          "FROM Plan_Schedule, Locality " +
                          "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
-            DataTable table = SelectFromDB(sql);
+                table = SelectFromDB(sql);
+                
+            }
             return table;
+            //if(user.role.name == "Оператор ОМСУ")
+            //{
+            //    string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+            //             "FROM Plan_Schedule, Locality " +
+            //             "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
+            //    DataTable table = SelectFromDB(sql);
+            //    return table;
+            //}
+
         }
 
         //Добавление записи в бд по списку значений

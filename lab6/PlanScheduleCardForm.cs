@@ -16,12 +16,13 @@ namespace lab6
     public partial class PlanScheduleCardForm : Form
     {
         public DataTable table;
+        public User user;
 
         MainController controller = new MainController();
-        public PlanScheduleCardForm(DataTable table)
+        public PlanScheduleCardForm(DataTable table, User user)
         { 
             this.table = table;
-
+            this.user = user;
             InitializeComponent();
             
         }
@@ -51,7 +52,17 @@ namespace lab6
                 textBox4.Text = row[3].ToString();
                 
             }
-          
+            userRoleLabel1.Text = user.role.name;
+            if (user.role.name != "Куратор по отлову")
+            {
+                button3.Enabled = false;
+                userRoleLabel2.Text = "Нет";
+            }
+            else
+            {
+                button3.Enabled = true;
+                userRoleLabel2.Text = "Редактирование";
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -62,6 +73,12 @@ namespace lab6
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+            groupBox1.Enabled = true;
         }
     }
 }
