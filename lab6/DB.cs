@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -7,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DataTable = System.Data.DataTable;
 
 namespace lab6
 {
     internal class DB
     {
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         static string sql;
@@ -47,6 +49,15 @@ namespace lab6
         }
 
         // Таня
+
+        public static void ChangeFromDB(string sql)
+        {
+            openConnection();
+            cmd.CommandText = sql;
+            cmd.ExecuteScalar();
+            closeConnection();  
+        }
+
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
@@ -54,17 +65,36 @@ namespace lab6
             return table;
         }
 
-        public static DataTable ListMunicipalContractsSelect(User user)
+        public static DataTable ListMunicipalContractsSelect(User user, string filt)
         {
+            string cellValue = "";
             if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
                 sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization";
             }
             else
             {
-                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization;
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization +")";
             }
             DataTable table = SelectFromDB(sql);
+            if(filt != "")
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    for (int j = 0; j < table.Columns.Count; j++)
+                    {
+                        cellValue = table.Rows[i][j].ToString();
+                        if (cellValue.Contains(filt))
+                        {
+                            if (table.Columns[j].ColumnName.ToString() != "Number")
+                                sql += " AND Number." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            else
+                                sql += " AND Date_of_conclusion." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                        }
+
+                    }
+                }
+            }
             return table;
         }
         public static DataTable ListOrganizationNameSelect()
@@ -81,8 +111,8 @@ namespace lab6
 
         public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
         {
-            sql = "DELETE FROM Plan_Schedule WHERE id = " + id_MunicipalContract + ";";
-            // Написать чтоб отправляло в бд и возвращала ответ
+            ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
+            ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
         }
 
         public static DataTable SelectFilterSortMunicipalContract(string filter, string sort)
