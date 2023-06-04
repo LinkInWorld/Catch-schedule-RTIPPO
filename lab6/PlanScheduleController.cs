@@ -13,7 +13,6 @@ namespace lab6
         public User user;
         public DataTable table = new DataTable();
 
-        public ArrayList record = new ArrayList();
 
         // получение таблицы из бд
         public DataTable getListPlanSchedule(User user) {   return DB.ListPlanScheduleSelect(user); }
