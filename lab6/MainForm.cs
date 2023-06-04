@@ -67,14 +67,14 @@ namespace lab6
         {
             List<string> localityList = controller.getListlocality();
             catchScheduleComboBox1.DataSource = localityList;
-            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы" || user.role.name == "Оператор по отлову" || user.role.name == "Оператор ОМСУ")
             {
                 dataGridView1.DataSource = controller.getListPlanSchedule(user);
                 dataGridView1.Columns[0].Visible = false;
                 dataGridView1.Update();
             }
                 
-            if (user.role.name != "Куратор по отлову")
+            if (user.role.name != "Оператор по отлову")
             {
                 ExceptionLabel1.Text = "Нет прав на добавление";
                 ExceptionLabel3.Text = "Нет прав на удаление";

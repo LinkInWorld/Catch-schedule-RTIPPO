@@ -27,7 +27,7 @@ namespace lab6
         }
         public DataTable getListPlanSchedule(User user)
         {
-            MessageBox.Show(user.role.id.ToString());
+            
             table = DB.ListPlanScheduleSelect(user);
             return table;
         }

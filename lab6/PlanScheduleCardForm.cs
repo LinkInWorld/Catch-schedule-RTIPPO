@@ -53,7 +53,7 @@ namespace lab6
                 
             }
             userRoleLabel1.Text = user.role.name;
-            if (user.role.name != "Куратор по отлову")
+            if (user.role.name != "Оператор по отлову")
             {
                 button3.Enabled = false;
                 userRoleLabel2.Text = "Нет";

@@ -12,8 +12,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         static string sql;
@@ -149,15 +149,20 @@ namespace lab6
         }
         public static DataTable ListPlanScheduleSelect(User user)
         {
-            
             DataTable table = new DataTable();  
-            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы" || user.role.name == "Куратор по отлову")
+            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
                 string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
                          "FROM Plan_Schedule, Locality " +
                          "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
                 table = SelectFromDB(sql);
-                
+            }
+            else if (user.role.name == "Оператор по отлову" || user.role.name == "Оператор ОМСУ")
+            {
+                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+                         "FROM Plan_Schedule, Locality " +
+                         "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
+                table = SelectFromDB(sql);
             }
             return table;
             //if(user.role.name == "Оператор ОМСУ")

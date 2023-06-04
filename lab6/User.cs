@@ -35,7 +35,7 @@ namespace lab6
                 login = row[6].ToString();
                 password = row[7].ToString();
                 idOrganization = Convert.ToInt32(row[8].ToString());
-                role = new Role(int.Parse(row[9].ToString()), row[11].ToString());
+                role = new Role(int.Parse(row[10].ToString()), row[12].ToString());
             }
 
         }
