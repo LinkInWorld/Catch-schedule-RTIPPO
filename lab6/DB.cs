@@ -15,8 +15,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         static string sql;
@@ -71,21 +71,22 @@ namespace lab6
             string cellValue = "";
             if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
-                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization";
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization ";
             }
             else
             {
-                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization +")";
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization +") ";
             }
             DataTable table = SelectFromDB(sql);
             table.Columns[0].ColumnName = "id_MunicipalContract";
             table.Columns[1].ColumnName = "Number";
             table.Columns[2].ColumnName = "Date_of_conclusion";
             table.Columns[3].ColumnName = "Date_of_execution";
-            table.Columns[4].ColumnName = "Customer";
-            table.Columns[5].ColumnName = "Executor";
+            table.Columns[4].ColumnName = "o1.Name";
+            table.Columns[5].ColumnName = "o2.Name";
             if (filt != "")
             {
+                
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     for (int j = 0; j < table.Columns.Count; j++)
@@ -93,12 +94,33 @@ namespace lab6
                         cellValue = table.Rows[i][j].ToString();
                         if (cellValue.Contains(filt))
                         {
-                            if (table.Columns[j].ColumnName.ToString() == "Customer")
-                                sql += " AND Organization." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            else if (table.Columns[j].ColumnName.ToString() == "Executor")
-                                sql += " AND Organization." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            else
-                                sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            
+                            //if (table.Columns[j].ColumnName.ToString() == "Number")
+                            //    sql += " AND Number = '" + filt+"'";
+                            //if (table.Columns[j].ColumnName.ToString() == "Date_of_conclusion")
+                            //    sql += " AND Date_of_conclusion = '" + filt + "'";
+                            //if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
+                            //    sql += " AND Date_of_execution = '" + filt + "'";
+                            //if (table.Columns[j].ColumnName.ToString() == "Customer")
+                            //    sql += " AND Customer = '" + filt + "'";
+                            if (table.Columns[j].ColumnName.ToString() == "Number")  
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Date_of_conclusion")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "o1.Name")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            if (table.Columns[j].ColumnName.ToString() == "o2.Name")
+                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+
+                            //{
+                            //    sql += " AND Organization.id = '" + cellValue + "';";
+                            //}
+                            //else if (table.Columns[j].ColumnName.ToString() == "Executor")
+                            //    sql += " AND Organization.id = '" + cellValue + "';";
+                            //else
+                            //    sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
                             /*if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
                                 sql += " AND Municipal_contract." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
                             if (table.Columns[j].ColumnName.ToString() == "Customer")
