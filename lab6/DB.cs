@@ -152,14 +152,14 @@ namespace lab6
             DataTable table = new DataTable();  
             if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
-                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
                          "FROM Plan_Schedule, Locality " +
                          "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
                 table = SelectFromDB(sql);
             }
             else if (user.role.name == "Оператор по отлову" || user.role.name == "Оператор ОМСУ")
             {
-                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
                          "FROM Plan_Schedule, Locality " +
                          "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
                 table = SelectFromDB(sql);
@@ -207,7 +207,8 @@ namespace lab6
                 "UPDATE Plan_Schedule SET " +
                 "id_Locality = '" + table.Rows[0][0] +"'," +
                 "Month = '" + record[1] +"'," +
-                "Year = '" + record[2] +"' " +
+                "Year = '" + record[2] +"'," +
+                "PDF_path = '" + record[3] +"' " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
         }
        
@@ -249,7 +250,7 @@ namespace lab6
         }
         public static DataTable ListDataPlanScheduleCard(string idSelectedPlanSchedule)
         {
-            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
                         "FROM Plan_Schedule, Locality " +
                         "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality AND [Plan_Schedule].id = '" + idSelectedPlanSchedule + "'";
             DataTable table = SelectFromDB(sql);
