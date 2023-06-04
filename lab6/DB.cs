@@ -15,8 +15,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         static string sql;
@@ -86,7 +86,6 @@ namespace lab6
             table.Columns[5].ColumnName = "o2.Name";
             if (filt != "")
             {
-
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     for (int j = 0; j < table.Columns.Count; j++)
