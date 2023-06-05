@@ -176,7 +176,7 @@ namespace lab6
             Regex regex = new Regex("^\\d{4}$");
             if (regex.IsMatch(catchSheduleTextBox1.Text))
             {
-                planSchController.getListPlanScheduleInserted(new ArrayList { catchScheduleComboBox1.Text, catchScheduleComboBox2.Text, catchSheduleTextBox1.Text });
+                planSchController.getListPlanScheduleInserted(new ArrayList { catchScheduleComboBox1.Text, catchScheduleComboBox2.Text, catchSheduleTextBox1.Text }, user);
                 ExceptionLabel1.Text = "Успех!";
 
             }
@@ -242,8 +242,8 @@ namespace lab6
 
         private void catchPlanScheduleButton5_Click(object sender, EventArgs e)
         {
-            table = planSchController.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()));
-            dataGridView1.DataSource = null;
+            table = planSchController.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), user);
+            
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
         }
@@ -252,5 +252,23 @@ namespace lab6
             selectedIdLabel.Text = dataGridView1.SelectedCells[0].Value.ToString();
         }
 
+        private void AddNomerContract_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void catchPlanScheduleButton3_Click(object sender, EventArgs e)
+        {
+            Excel.Application exApp = new Excel.Application();
+            exApp.Workbooks.Add(); Excel.Worksheet wsh = (Excel.Worksheet)exApp.ActiveSheet;
+            int i, j; for (i = 0; i < dataGridView1.RowCount - 1; i++)
+            {
+                for (j = 1; j < dataGridView1.ColumnCount; j++)
+                {
+                    wsh.Cells[i + 1, j + 1] = dataGridView1[j, i].Value.ToString();
+                }
+            }
+            exApp.Visible = true;
+        }
     }
 }

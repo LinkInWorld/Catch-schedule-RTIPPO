@@ -15,8 +15,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteCommand cmd;
         static string sql;
@@ -128,7 +128,19 @@ namespace lab6
         {
             try
             {
-                ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', " + Convert.ToInt32(record[3]) + ", " + Convert.ToInt32(record[4]) + ")");
+                DataTable table = SelectFromDB(
+                "SELECT [Municipal_contract].Customer, [Organization].id_Organization " +
+                "FROM Municipal_contract, Organization " +
+                "WHERE [Organization].Name = '" + record[4] + "' "
+                );
+                DataTable table2 = SelectFromDB(
+                "SELECT [Municipal_contract].Executor, [Organization].id_Organization " +
+                "FROM Municipal_contract, Organization " +
+                "WHERE [Organization].Name = '" + record[5] + "' "
+                );
+            
+                
+                ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', '" + table.Rows[0][1] + "', '" + table2.Rows[0][1] + "')");
                 DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
                 foreach (var nameLocality in arrayLocalityContract)
                 {
@@ -139,7 +151,7 @@ namespace lab6
             }
             catch
             {
-                MessageBox.Show("Произошла ошибка");
+                MessageBox.Show("error");
             }
             //НАПИСАТЬ КОД ДЛЯ добавления другой таблички контракта
         }
@@ -258,7 +270,7 @@ namespace lab6
         {
             string sql = ExecuteQueryWithAnswer(
                 "DELETE FROM Plan_Schedule " +
-                "WHERE id = " + idSelectedPlanSchedule + ";");
+                "WHERE id = '" + idSelectedPlanSchedule + "';");
         }
         // Редактирование таблицы по id и списку значений
         public static void ListPlanScheduleUpdate(int idSelectedPlanSchedule, ArrayList record)
@@ -282,7 +294,7 @@ namespace lab6
         public static DataTable ListPlanScheduleFilterSelect(string filter, string sort)
         {
             string cellValue = "";
-            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
+            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
                         "FROM Plan_Schedule, Locality " +
                         "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
 

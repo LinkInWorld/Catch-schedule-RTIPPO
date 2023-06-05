@@ -21,7 +21,7 @@ namespace lab6
         public DataTable getDataPlanScheduleCard(string idSelectedPlanSchedule){    return DB.ListDataPlanScheduleCard(idSelectedPlanSchedule); }
 
         //Удаление записи из бд
-        public DataTable getListPlanScheduleDeleted(int idSelectedPlanSchedule)
+        public DataTable getListPlanScheduleDeleted(int idSelectedPlanSchedule, User user)
         {
 
             DB.ListPlanScheduleDelete(idSelectedPlanSchedule);
@@ -30,7 +30,7 @@ namespace lab6
         }
 
         //Добавление записи в бд
-        public DataTable getListPlanScheduleInserted(ArrayList record)
+        public DataTable getListPlanScheduleInserted(ArrayList record, User user)
         {
             DB.ListPlanScheduleInsert(record);
             table = DB.ListPlanScheduleSelect(user);
