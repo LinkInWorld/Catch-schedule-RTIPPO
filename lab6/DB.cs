@@ -101,10 +101,11 @@ namespace lab6
                         {
                             table.Rows[i].Delete();
                             j = table.Columns.Count;
-                            table.AcceptChanges();
                         }
                     }
                 }
+
+                table.AcceptChanges();
             }
             return table;
         }
