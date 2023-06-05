@@ -76,3 +76,4 @@ C:\Users\Poldnik999\source\repos\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.PlanS
 C:\Users\kwa\Documents\GitHub\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.PlanScheduleCardForm.resources
 C:\Users\kwa\Documents\GitHub\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.csproj.ResolveComReference.cache
 C:\Users\Poldnik999\source\repos\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.csproj.ResolveComReference.cache
+C:\Users\kwa\Documents\GitHub\Catch-schedule-RTIPPO\lab6\obj\Debug\lab6.MunicipalContractCard.resources

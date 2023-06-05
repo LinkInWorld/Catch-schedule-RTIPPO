@@ -84,6 +84,12 @@
     </Compile>
     <Compile Include="MainController.cs" />
     <Compile Include="MunicipalContract.cs" />
+    <Compile Include="MunicipalContractCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MunicipalContractCard.Designer.cs">
+      <DependentUpon>MunicipalContractCard.cs</DependentUpon>
+    </Compile>
     <Compile Include="MunicipalContractController.cs" />
     <Compile Include="PlanScheduleCardForm.cs">
       <SubType>Form</SubType>
@@ -101,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MunicipalContractCard.resx">
+      <DependentUpon>MunicipalContractCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlanScheduleCardForm.resx">
       <DependentUpon>PlanScheduleCardForm.cs</DependentUpon>

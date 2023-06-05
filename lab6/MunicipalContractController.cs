@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.ListBox;
+using Application = System.Windows.Forms.Application;
 using DataTable = System.Data.DataTable;
 
 namespace lab6
@@ -17,6 +19,7 @@ namespace lab6
         public User user;
         public DataTable table = new DataTable();
         public string filt;
+        Thread th;
 
         public DataTable getListMunicipalContract(User user, string filt)
         {
@@ -47,7 +50,7 @@ namespace lab6
 
         public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
-
+            filt = "";
             DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
             table = DB.ListMunicipalContractsSelect(user, filt);
             table.Columns["Number"].ColumnName = "Номер";
@@ -60,6 +63,7 @@ namespace lab6
 
         public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
         {
+            filt = "";
             DB.SelectDeleteMunicipalContract(id_MunicipalContract);
             table = DB.ListMunicipalContractsSelect(user, filt);
             table.Columns["Number"].ColumnName = "Номер";
@@ -68,6 +72,17 @@ namespace lab6
             table.Columns["Customer"].ColumnName = "Заказчик";
             table.Columns["Executor"].ColumnName = "Исполнитель";
             return table;
+        }
+
+        public void ViewMunicipalConrtactCard()
+        {
+            th = new Thread(open);
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+        }
+        void open(object obj)
+        {
+            Application.Run(new MunicipalContractCard());
         }
     }
 }

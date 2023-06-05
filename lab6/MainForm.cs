@@ -125,7 +125,7 @@ namespace lab6
 
         private void button4_Click(object sender, EventArgs e) //открытие карточки
         {
-
+            MunicipalContractController.ViewMunicipalConrtactCard();
         }
 
 
