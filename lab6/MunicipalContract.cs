@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace lab6
 {
-    internal class MunicipalContract
+    public class MunicipalContract
     {
-        int id;
-        int number;
-        string dateOfConclusion;
-        string dateOfExecotion;
-        int customer;
-        int executor;
+        public int id;
+        public int number;
+        public string dateOfConclusion;
+        public string dateOfExecotion;
+        public int customer;
+        public int executor;
 
         public MunicipalContract(DataTable table)
         {
@@ -27,6 +27,11 @@ namespace lab6
                 customer = int.Parse(row[4].ToString());
                 executor = int.Parse(row[5].ToString());
             }
+
+        }
+        public MunicipalContract()
+        {
+           
 
         }
 
