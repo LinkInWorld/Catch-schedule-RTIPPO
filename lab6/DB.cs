@@ -126,34 +126,16 @@ namespace lab6
 
         public static void SelectCreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
-            try
+            ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', '" + Convert.ToInt32(record[4]) + "', '" + Convert.ToInt32(record[5]) + "')");
+            DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
+            foreach (var nameLocality in arrayLocalityContract)
             {
-                DataTable table = SelectFromDB(
-                "SELECT [Municipal_contract].Customer, [Organization].id_Organization " +
-                "FROM Municipal_contract, Organization " +
-                "WHERE [Organization].Name = '" + record[4] + "' "
-                );
-                DataTable table2 = SelectFromDB(
-                "SELECT [Municipal_contract].Executor, [Organization].id_Organization " +
-                "FROM Municipal_contract, Organization " +
-                "WHERE [Organization].Name = '" + record[5] + "' "
-                );
-            
-                
-                ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', '" + table.Rows[0][1] + "', '" + table2.Rows[0][1] + "')");
-                DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
-                foreach (var nameLocality in arrayLocalityContract)
-                {
-                    //MessageBox.Show(nameLocality.ToString());
-                    DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + nameLocality+"'");
-                    ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + infoLocality.Rows[0][0] + ", " + idNewContract.Rows[0][0] + ", " + infoLocality.Rows[0][2] + ")");
-                }
+                 //MessageBox.Show(nameLocality.ToString());
+                 DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + nameLocality+"'");
+                 //MessageBox.Show(""+ Convert.ToInt32(infoLocality.Rows[0][2]));
+
+                ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + Convert.ToInt32(infoLocality.Rows[0][0]) + ", " + Convert.ToInt32(idNewContract.Rows[0][0]) + ", " + Convert.ToInt32(infoLocality.Rows[0][2]) + ")");
             }
-            catch
-            {
-                MessageBox.Show("error");
-            }
-            //НАПИСАТЬ КОД ДЛЯ добавления другой таблички контракта
         }
 
         public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
