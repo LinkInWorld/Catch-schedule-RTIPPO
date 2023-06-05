@@ -78,37 +78,34 @@ namespace lab6
                 sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization + ") ";
             }
             DataTable table = SelectFromDB(sql);
+            DataTable table2 = new DataTable();
             table.Columns[0].ColumnName = "id_MunicipalContract";
             table.Columns[1].ColumnName = "Number";
             table.Columns[2].ColumnName = "Date_of_conclusion";
             table.Columns[3].ColumnName = "Date_of_execution";
-            table.Columns[4].ColumnName = "o1.Name";
-            table.Columns[5].ColumnName = "o2.Name";
+            table.Columns[4].ColumnName = "Customer";
+            table.Columns[5].ColumnName = "Executor";
             if (filt != "")
             {
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
+                    bool there_is_match = false;
                     for (int j = 0; j < table.Columns.Count; j++)
                     {
                         cellValue = table.Rows[i][j].ToString();
                         if (cellValue.Contains(filt))
                         {
-                            if (table.Columns[j].ColumnName.ToString() == "Number")
-                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
-                            if (table.Columns[j].ColumnName.ToString() == "Date_of_conclusion")
-                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
-                            if (table.Columns[j].ColumnName.ToString() == "Date_of_execution")
-                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
-                            if (table.Columns[j].ColumnName.ToString() == "o1.Name")
-                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
-                            if (table.Columns[j].ColumnName.ToString() == "o2.Name")
-                                sql += "AND " + table.Columns[j].ColumnName + "  = '" + cellValue + "';";
+                            there_is_match = true;
                         }
-
+                        else if (!there_is_match && j == (table.Columns.Count -1))
+                        {
+                            table.Rows[i].Delete();
+                            j = table.Columns.Count;
+                            table.AcceptChanges();
+                        }
                     }
                 }
             }
-            table = SelectFromDB(sql);
             return table;
         }
         public static DataTable ListOrganizationNameSelect()
