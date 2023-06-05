@@ -11,8 +11,8 @@ namespace lab6
     {
         int id;
         int number;
-        DateTime dateOfConclusion;
-        DateTime dateOfExecotion;
+        string dateOfConclusion;
+        string dateOfExecotion;
         int customer;
         int executor;
 
@@ -22,8 +22,8 @@ namespace lab6
             {
                 id = int.Parse(row[0].ToString());
                 number = int.Parse(row[1].ToString());
-                dateOfConclusion = DateTime.Parse(row[2].ToString());
-                dateOfExecotion = DateTime.Parse(row[3].ToString());
+                dateOfConclusion = (row[2].ToString());
+                dateOfExecotion = (row[3].ToString());
                 customer = int.Parse(row[4].ToString());
                 executor = int.Parse(row[5].ToString());
             }

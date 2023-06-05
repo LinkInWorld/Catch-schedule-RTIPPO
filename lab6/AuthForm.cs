@@ -15,7 +15,9 @@ namespace lab6
 {
     public partial class AuthForm : Form
     {
-        public User user;
+        String loginUser;
+        String passUser;
+        AuthController authController = new AuthController();
         public AuthForm()
         {
             InitializeComponent();
@@ -38,10 +40,8 @@ namespace lab6
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            AuthController authController = new AuthController();
-            String loginUser = loginField.Text;
-            String passUser = passField.Text;
-
+            loginUser = loginField.Text;
+            passUser = passField.Text;
             authController.AythMetod(loginUser, passUser);
         }
     }
