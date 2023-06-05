@@ -72,21 +72,28 @@ namespace lab6
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
-            ArrayList arrayLocalityContract = new ArrayList();
-            var selectedObject = AddLocalityContract.SelectedItems;
-            var val = "";
-            foreach (DataRowView i in selectedObject)
+            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
-                val = i.Row.ItemArray[1].ToString();
-                arrayLocalityContract.Add(val);
+                ArrayList arrayLocalityContract = new ArrayList();
+                var selectedObject = AddLocalityContract.SelectedItems;
+                var val = "";
+                foreach (DataRowView i in selectedObject)
+                {
+                    val = i.Row.ItemArray[1].ToString();
+                    arrayLocalityContract.Add(val);
+                }
+                //MessageBox.Show(arrayLocalityContract[0].ToString());
+                ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
+                table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, arrayLocalityContract);
+                dataGridView3.DataSource = null;
+                dataGridView3.DataSource = table;
+                dataGridView3.Columns[0].Visible = false;
+                dataGridView3.Update();
             }
-            //MessageBox.Show(arrayLocalityContract[0].ToString());
-            ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
-            table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, arrayLocalityContract);
-            dataGridView3.DataSource = null;
-            dataGridView3.DataSource = table;
-            dataGridView3.Columns[0].Visible = false;
-            dataGridView3.Update();
+            else
+            {
+                MessageBox.Show("У вас недостаточно прав для создания контракта!");
+            }
 
         }
 
