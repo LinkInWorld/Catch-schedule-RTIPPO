@@ -124,9 +124,7 @@ namespace lab6
             else if (SortradioButtonDateConclution.Checked) sort = SortradioButtonDateConclution.Text.ToString();
             else if (SortradioButtonDateExecute.Checked) sort = SortradioButtonDateExecute.Text.ToString();
             filtr = FilterTextBox.Text;
-            //table = MunicipalContractController.getListMunicipalContract(user, filtr);
-            table.DefaultView.Sort = sort;
-            table = table.DefaultView.ToTable();
+            table = MunicipalContractController.getListMunicipalContract(sort, filtr);
             dataGridView3.DataSource = table;
             dataGridView3.Columns[0].Visible = false;
 

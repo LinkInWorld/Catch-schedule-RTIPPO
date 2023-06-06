@@ -83,7 +83,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainController.cs" />
     <Compile Include="MunicipalContract.cs" />
     <Compile Include="MunicipalContractCard.cs">
       <SubType>Form</SubType>
@@ -107,6 +106,7 @@
     <Compile Include="Role\OperatorTrapping.cs" />
     <Compile Include="Role\OpertorVetService.cs" />
     <Compile Include="Role\Other.cs" />
+    <Compile Include="Role\OperatorOMSY.cs" />
     <Compile Include="Role\SignatorVetService.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="User.cs" />

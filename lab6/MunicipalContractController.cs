@@ -17,29 +17,26 @@ namespace lab6
 
         public DataTable getListMunicipalContract(string sort, string filtr)
         {
-            bool roleFilter = Session.GetCurrentPM().CanUpdate(new MunicipalContract());
-            table = DB.ListMunicipalContractsSelect(user, filtr);
-            /*table = DB.ListMunicipalContractsSelect(user, filt);
+            bool roleFilter = Session.GetCurrentPM().CanWatchAll(new MunicipalContract());
+            table = DB.ListMunicipalContractsSelect(filtr, roleFilter);
             table.Columns["Number"].ColumnName = "Номер";
             table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
             table.Columns["Date_of_execution"].ColumnName = "Дата действия";
             table.Columns["Customer"].ColumnName = "Заказчик";
-            table.Columns["Executor"].ColumnName = "Исполнитель";*/
+            table.Columns["Executor"].ColumnName = "Исполнитель";
+            table.DefaultView.Sort = sort;
+            table = table.DefaultView.ToTable();
             return table;
-            
         }
 
         public DataTable getListOrganization()
         {
-
-            table = DB.ListOrganizationNameSelect();
-            return table;
+            return DB.ListOrganizationNameSelect();
         }
 
         public DataTable getListLocaity()
         {
-            table = DB.ListLocalitySelectid_Locality();
-            return table;
+            return DB.ListLocalitySelectid_Locality();
         }
 
         public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)

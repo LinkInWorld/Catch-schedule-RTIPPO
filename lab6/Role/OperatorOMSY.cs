@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace lab6
 {
-    public class Other : PM
+    public class OperatorOMSY : PM
     {
-        public Other(User user) : base(user) { }
+        public OperatorOMSY(User user) : base(user) { }
         public override bool CanWatchAll(object obj)
         {
             if (obj is MunicipalContract)
@@ -17,12 +17,11 @@ namespace lab6
             }
             return false;
         }
-
         public override bool CanUpdate(object obj)
         {
             if (obj is MunicipalContract)
             {
-                return false;
+                return true;
             }
             return false;
         }

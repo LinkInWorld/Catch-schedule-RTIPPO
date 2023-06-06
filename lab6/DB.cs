@@ -17,11 +17,11 @@ namespace lab6
     {
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
 
 
         static SQLiteCommand cmd;
         static string sql;
+        static User user = Session.GetCurrentUser();
         public static void openConnection()
         {
             connection.Open();
@@ -49,26 +49,17 @@ namespace lab6
         }
 
         // Таня
-/*
-        public static void ChangeFromDB(string sql)
-        {
-            openConnection();
-            cmd.CommandText = sql;
-            cmd.ExecuteScalar();
-            closeConnection();  
-        }*/
 
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
-            DataTable table = SelectFromDB(sql);
-            return table;
+            return SelectFromDB(sql);
         }
 
-        public static DataTable ListMunicipalContractsSelect(User user, string filt)
+        public static DataTable ListMunicipalContractsSelect(string filt, bool roleFilter)
         {
             string cellValue = "";
-            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            if (roleFilter)
             {
                 sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization ";
             }
@@ -173,15 +164,6 @@ namespace lab6
 
             table = SelectFromDB(sql);
             table.DefaultView.Sort = sort;
-            return table;
-        }
-
-
-        // Илья
-        public static DataTable ListOrganizationSelect()
-        {
-            string sql = "SELECT * FROM Organization";
-            DataTable table = SelectFromDB(sql);
             return table;
         }
 

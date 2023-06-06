@@ -9,7 +9,14 @@ namespace lab6
     public class OperatorTrapping : PM
     {
         public OperatorTrapping(User user) : base(user) { }
-
+        public override bool CanWatchAll(object obj)
+        {
+            if (obj is MunicipalContract)
+            {
+                return false;
+            }
+            return false;
+        }
         public override bool CanUpdate(object obj)
         {
             if (obj is MunicipalContract)
