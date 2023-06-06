@@ -28,7 +28,6 @@ namespace lab6
         public string filtr = "";
 
 
-        MainController controller = new MainController();
         PlanScheduleController planSchController = new PlanScheduleController();
         MunicipalContractController MunicipalContractController = new MunicipalContractController();
         public MainForm(User user)
@@ -36,6 +35,7 @@ namespace lab6
             this.user = user;
             InitializeComponent();
         }
+
         // Таня
         private void button1_Click(object sender, EventArgs e)
         {
@@ -72,7 +72,7 @@ namespace lab6
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
-            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            /*if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
                 ArrayList arrayLocalityContract = new ArrayList();
                 var selectedObject = AddLocalityContract.SelectedItems;
@@ -93,26 +93,19 @@ namespace lab6
             else
             {
                 MessageBox.Show("У вас недостаточно прав для создания контракта!");
-            }
+            }*/
 
         }
 
         private void ButtonDeleteMunicipalContract_Click_1(object sender, EventArgs e)
         {
-            /*if(user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
-            {
-                table = MunicipalContractController.SelectDeleteMunicipalContract(Convert.ToInt32(dataGridView3.SelectedCells[0].Value.ToString()), user);
-                dataGridView3.DataSource = null;
-                dataGridView3.DataSource = table;
-                dataGridView3.Columns[0].Visible = false;
-                dataGridView3.Update();
-            }
-            else
-            {
-                MessageBox.Show("У вас недостаточно прав для удаления записи!");
-            }*/
-            MunicipalContract municipalContract = new MunicipalContract();
-            MunicipalContractController.DeleteMunicipalContract(municipalContract);
+            DataTable table = new DataTable();
+            int idmunisipalContract = Convert.ToInt32(dataGridView3.SelectedCells[0].Value.ToString());
+            table = MunicipalContractController.DeleteMunicipalContract(idmunisipalContract);
+            dataGridView3.DataSource = null;
+            dataGridView3.DataSource = table;
+            dataGridView3.Columns[0].Visible = false;
+            dataGridView3.Update();
         }
 
         private void ButtonSortFiltrMunicipalContract_Click(object sender, EventArgs e)
@@ -139,12 +132,6 @@ namespace lab6
         // Илья
         private void button2_Click(object sender, EventArgs e)
         {
-            table = controller.getListOrganizationContract();
-
-            dataGridView2.DataSource = table;
-            dataGridView2.Columns[0].Visible = false;
-            dataGridView2.Update();
-            tabControl1.SelectTab(tabPage2);
         }
 
         //Никита
@@ -210,7 +197,6 @@ namespace lab6
         {
 
         }
-        Thread th;
         private void catchPlanScheduleButton4_Click(object sender, EventArgs e)
         {
             
@@ -277,5 +263,7 @@ namespace lab6
             }
             exApp.Visible = true;
         }
+
+        
     }
 }

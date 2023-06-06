@@ -27,6 +27,10 @@ namespace lab6
             {
                 return new OperatorTrapping(user);
             }
+            else if (user.role.name == "Оператор ОМСУ")
+            {
+                return new OperatorOMSY(user);
+            }
             return new Other(user);
         }
     }

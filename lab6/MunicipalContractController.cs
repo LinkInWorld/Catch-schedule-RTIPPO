@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Microsoft.Office.Interop.Excel;
+using System.Collections;
 using System.Threading;
 using System.Windows.Forms;
 using Application = System.Windows.Forms.Application;
@@ -10,9 +11,12 @@ namespace lab6
     {
         public User user = Session.GetCurrentUser();
         public PM pm = Session.GetCurrentPM();
-        
+        public bool canUpdate = Session.GetCurrentPM().CanUpdate(new MunicipalContract());
+
+
         public DataTable table = new DataTable();
-        public string filt;
+        public string filtr = "";
+        public string sort = "";
         Thread th;
 
         public DataTable getListMunicipalContract(string sort, string filtr)
@@ -39,7 +43,7 @@ namespace lab6
             return DB.ListLocalitySelectid_Locality();
         }
 
-        public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
+        /*public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
             filt = "";
             DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
@@ -50,9 +54,9 @@ namespace lab6
             table.Columns["Customer"].ColumnName = "Заказчик";
             table.Columns["Executor"].ColumnName = "Исполнитель";
             return table;
-        }
+        }*/
 
-        public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
+        /*public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
         {
             filt = "";
             DB.SelectDeleteMunicipalContract(id_MunicipalContract);
@@ -63,14 +67,17 @@ namespace lab6
             table.Columns["Customer"].ColumnName = "Заказчик";
             table.Columns["Executor"].ColumnName = "Исполнитель";
             return table;
-        }
+        }*/
 
-        public DataTable DeleteMunicipalContract(MunicipalContract municipalContract)
+        public DataTable DeleteMunicipalContract(int idmunisipalContract)
         {
-            /*PM pm = PMFactory.GetUserPM(user);
+            if (canUpdate)
+            {
+                DB.SelectDeleteMunicipalContract(idmunisipalContract);
+            }
+            else MessageBox.Show("У вас недостаточно прав для удаления записи!");
+            return getListMunicipalContract(sort, filtr);
 
-            MessageBox.Show(pm.ToString());*/
-            return table;
         }
 
         public void ViewMunicipalConrtactCard()

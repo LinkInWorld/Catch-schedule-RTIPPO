@@ -19,9 +19,9 @@ namespace lab6
         static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
 
 
-        static SQLiteCommand cmd;
+        static SQLiteCommand cmd = new SQLiteCommand();
         static string sql;
-        static User user = Session.GetCurrentUser();
+        static DataTable table;
         public static void openConnection()
         {
             connection.Open();
@@ -49,7 +49,7 @@ namespace lab6
         }
 
         // Таня
-
+        // ГОТОВО
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
@@ -59,22 +59,16 @@ namespace lab6
         public static DataTable ListMunicipalContractsSelect(string filt, bool roleFilter)
         {
             string cellValue = "";
+            User user = Session.GetCurrentUser();
             if (roleFilter)
             {
                 sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization ";
             }
             else
             {
-                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = " + user.idOrganization + " OR Municipal_contract.Executor = " + user.idOrganization + ") ";
+                sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE (Municipal_contract.Customer = '" + user.idOrganization.ToString() + "' OR Municipal_contract.Executor = '" + user.idOrganization.ToString() + "') ";
             }
-            DataTable table = SelectFromDB(sql);
-            DataTable table2 = new DataTable();
-            table.Columns[0].ColumnName = "id_MunicipalContract";
-            table.Columns[1].ColumnName = "Number";
-            table.Columns[2].ColumnName = "Date_of_conclusion";
-            table.Columns[3].ColumnName = "Date_of_execution";
-            table.Columns[4].ColumnName = "Customer";
-            table.Columns[5].ColumnName = "Executor";
+            table = SelectFromDB(sql);
             if (filt != "")
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -87,18 +81,18 @@ namespace lab6
                         {
                             there_is_match = true;
                         }
-                        else if (!there_is_match && j == (table.Columns.Count -1))
+                        else if (!there_is_match && j == (table.Columns.Count - 1))
                         {
                             table.Rows[i].Delete();
                             j = table.Columns.Count;
                         }
                     }
                 }
-
                 table.AcceptChanges();
             }
             return table;
         }
+
         public static DataTable ListOrganizationNameSelect()
         {
             string sql = "SELECT id_Organization, Name FROM Organization";
@@ -108,9 +102,18 @@ namespace lab6
         public static DataTable ListLocalitySelectid_Locality()
         {
             string sql = "SELECT id_Locality, Name FROM Locality";
-            DataTable table = SelectFromDB(sql);
-            return table;
+            return SelectFromDB(sql);
         }
+        public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
+        {
+            ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
+            ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
+        }
+
+
+
+        // ПРОСМОТРИ БЛИН
+
 
         public static void SelectCreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
@@ -126,46 +129,8 @@ namespace lab6
             }
         }
 
-        public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
-        {
-            ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
-            ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
-        }
+        
 
-        public static DataTable SelectFilterSortMunicipalContract(string filter, string sort)
-        {
-            string cellValue = "";
-            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year " +
-                        "FROM Plan_Schedule, Locality " +
-                        "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
-
-            DataTable table = SelectFromDB(sql);
-            table.Columns[0].ColumnName = "id";
-            table.Columns[1].ColumnName = "Name";
-            table.Columns[2].ColumnName = "Month";
-            table.Columns[3].ColumnName = "Year";
-
-            if (filter != "")
-                for (int i = 0; i < table.Rows.Count; i++)
-                {
-                    for (int j = 0; j < table.Columns.Count; j++)
-                    {
-                        cellValue = table.Rows[i][j].ToString();
-                        if (cellValue.Contains(filter))
-                        {
-                            if (table.Columns[j].ColumnName.ToString() != "Name")
-                                sql += " AND [Plan_schedule]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            else
-                                sql += " AND [Locality]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                        }
-
-                    }
-                }
-
-            table = SelectFromDB(sql);
-            table.DefaultView.Sort = sort;
-            return table;
-        }
 
         // Никита
         // Список населенных пунктов
