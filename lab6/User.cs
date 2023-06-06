@@ -39,5 +39,10 @@ namespace lab6
             }
 
         }
+
+        public User()
+        {
+
+        }
     }
 }

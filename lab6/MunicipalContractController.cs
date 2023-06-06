@@ -1,14 +1,6 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.ListBox;
 using Application = System.Windows.Forms.Application;
 using DataTable = System.Data.DataTable;
 
@@ -17,21 +9,22 @@ namespace lab6
     internal class MunicipalContractController
     {
         public User user = Session.GetCurrentUser();
-        public PMFactory PMFactory = new PMFactory();
+        public PM pm = Session.GetCurrentPM();
+        
         public DataTable table = new DataTable();
         public string filt;
         Thread th;
 
-        public DataTable getListMunicipalContract(User user, string filt)
+        public DataTable getListMunicipalContract(string sort, string filtr)
         {
-            this.user = user;
-            MainForm form = new MainForm(user);
-            table = DB.ListMunicipalContractsSelect(user, filt);
+            bool roleFilter = Session.GetCurrentPM().CanUpdate(new MunicipalContract());
+            table = DB.ListMunicipalContractsSelect(user, filtr);
+            /*table = DB.ListMunicipalContractsSelect(user, filt);
             table.Columns["Number"].ColumnName = "Номер";
             table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
             table.Columns["Date_of_execution"].ColumnName = "Дата действия";
             table.Columns["Customer"].ColumnName = "Заказчик";
-            table.Columns["Executor"].ColumnName = "Исполнитель";
+            table.Columns["Executor"].ColumnName = "Исполнитель";*/
             return table;
             
         }
@@ -77,9 +70,9 @@ namespace lab6
 
         public DataTable DeleteMunicipalContract(MunicipalContract municipalContract)
         {
-            PM pm = PMFactory.GetUserPM(user);
+            /*PM pm = PMFactory.GetUserPM(user);
 
-            MessageBox.Show(pm.ToString());
+            MessageBox.Show(pm.ToString());*/
             return table;
         }
 

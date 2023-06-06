@@ -18,6 +18,8 @@ namespace lab6
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+
+
         static SQLiteCommand cmd;
         static string sql;
         public static void openConnection()
@@ -34,42 +36,27 @@ namespace lab6
         {
             return connection;
         }
-        
+
         public static DataTable SelectFromDB(string Sring)
         {
-            openConnection();
             DataTable table = new DataTable();
             SQLiteDataAdapter adapter = new SQLiteDataAdapter();
-
-            cmd = new SQLiteCommand(Sring, getConnection());
+            SQLiteCommand cmd = new SQLiteCommand(Sring, getConnection());
 
             adapter.SelectCommand = cmd;
             adapter.Fill(table);
-            closeConnection();
             return table;
         }
 
         // Таня
-
+/*
         public static void ChangeFromDB(string sql)
         {
             openConnection();
             cmd.CommandText = sql;
             cmd.ExecuteScalar();
             closeConnection();  
-        }
-
-        public void Delete(object obj)
-        {
-            if (obj is MunicipalContract)
-            {
-                //ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
-                //ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
-                MessageBox.Show("удалено");
-            }
-        }
-
-
+        }*/
 
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {

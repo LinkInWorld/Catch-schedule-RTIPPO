@@ -39,7 +39,7 @@ namespace lab6
         // Таня
         private void button1_Click(object sender, EventArgs e)
         {
-            table = MunicipalContractController.getListMunicipalContract(user, filtr);
+            table = MunicipalContractController.getListMunicipalContract(sort, filtr);
 
             AddCustomerContract.DataSource = MunicipalContractController.getListOrganization();
             AddCustomerContract.DisplayMember = "Name";
@@ -124,7 +124,7 @@ namespace lab6
             else if (SortradioButtonDateConclution.Checked) sort = SortradioButtonDateConclution.Text.ToString();
             else if (SortradioButtonDateExecute.Checked) sort = SortradioButtonDateExecute.Text.ToString();
             filtr = FilterTextBox.Text;
-            table = MunicipalContractController.getListMunicipalContract(user, filtr);
+            //table = MunicipalContractController.getListMunicipalContract(user, filtr);
             table.DefaultView.Sort = sort;
             table = table.DefaultView.ToTable();
             dataGridView3.DataSource = table;
