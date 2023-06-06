@@ -12,14 +12,38 @@ namespace lab6
 {
     public partial class MunicipalContractCard : Form
     {
-        public MunicipalContractCard()
+        public bool canUpdate = Session.GetCurrentPM().CanUpdate(new MunicipalContract());
+        MunicipalContractController MunicipalContractController = new MunicipalContractController();
+        public MunicipalContractCard(int idmunisipalContract)
         {
             InitializeComponent();
+            MunicipalContract munnicipalContract = MunicipalContractController.ViewMunicipalContractCard(idmunisipalContract);
+            if (!canUpdate)
+            {
+                AddNomerContract.ReadOnly = true;
+                AddDateConContract.ReadOnly = true;
+                AddDateExeContract.ReadOnly = true;
+                AddCustomerContract.ReadOnly = true;
+                AddExecutinContract.ReadOnly = true;
+                //AddLocalityContract.ReadOnly = true;
+                ButtonCreateMunicipalContract.Enabled = false;
+            }
+            textBox1.ReadOnly = true;
+            AddNomerContract.Text = munnicipalContract.number.ToString();
+            AddDateConContract.Text = munnicipalContract.dateOfConclusion.ToString();
+            AddDateExeContract.Text = munnicipalContract.dateOfExecotion.ToString();
+            AddCustomerContract.Text = munnicipalContract.customer.ToString();
+            AddExecutinContract.Text = munnicipalContract.executor.ToString();/*
+            AddLocalityContract.DataSource = munnicipalContract.tableLocalyty;
+            AddLocalityContract.DisplayMember = "Name";
+            AddLocalityContract.ValueMember = "id_Locality";*/
+            textBox1.Text = munnicipalContract.price.ToString();
         }
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
 
+            
         }
     }
 }

@@ -30,6 +30,8 @@ namespace lab6
 
         PlanScheduleController planSchController = new PlanScheduleController();
         MunicipalContractController MunicipalContractController = new MunicipalContractController();
+        private Thread th;
+
         public MainForm(User user)
         {
             this.user = user;
@@ -125,8 +127,17 @@ namespace lab6
 
         private void button4_Click(object sender, EventArgs e) //открытие карточки
         {
-            MunicipalContractController.ViewMunicipalConrtactCard();
+            int idmunisipalContract = Convert.ToInt32(dataGridView3.SelectedCells[0].Value.ToString());
+            MunicipalContractCard municipalContractCard = new MunicipalContractCard(idmunisipalContract);
+            municipalContractCard.ShowDialog();
+            /*th = new Thread(open);
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();*/
         }
+        /*void open(object obj)
+        {
+            Application.Run(new MunicipalContractCard(idmunisipalContract));
+        }*/
 
 
         // Илья

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.AddLocalityContract = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.AddDateExeContract = new System.Windows.Forms.TextBox();
@@ -37,18 +39,18 @@
             this.label18 = new System.Windows.Forms.Label();
             this.ButtonCreateMunicipalContract = new System.Windows.Forms.Button();
             this.AddNomerContract = new System.Windows.Forms.TextBox();
-            this.AddCustomerContract = new System.Windows.Forms.ComboBox();
-            this.AddExecutinContract = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.AddExecutinContract = new System.Windows.Forms.TextBox();
+            this.AddCustomerContract = new System.Windows.Forms.TextBox();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.AddCustomerContract);
+            this.groupBox3.Controls.Add(this.AddExecutinContract);
             this.groupBox3.Controls.Add(this.textBox1);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.AddLocalityContract);
@@ -59,8 +61,6 @@
             this.groupBox3.Controls.Add(this.label18);
             this.groupBox3.Controls.Add(this.ButtonCreateMunicipalContract);
             this.groupBox3.Controls.Add(this.AddNomerContract);
-            this.groupBox3.Controls.Add(this.AddCustomerContract);
-            this.groupBox3.Controls.Add(this.AddExecutinContract);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label14);
@@ -72,6 +72,24 @@
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Добавить";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(138, 245);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(167, 22);
+            this.textBox1.TabIndex = 15;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 248);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 16);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Стоимость";
             // 
             // AddLocalityContract
             // 
@@ -149,25 +167,6 @@
             this.AddNomerContract.Size = new System.Drawing.Size(167, 22);
             this.AddNomerContract.TabIndex = 5;
             // 
-            // AddCustomerContract
-            // 
-            this.AddCustomerContract.CausesValidation = false;
-            this.AddCustomerContract.FormattingEnabled = true;
-            this.AddCustomerContract.Location = new System.Drawing.Point(139, 107);
-            this.AddCustomerContract.Margin = new System.Windows.Forms.Padding(4);
-            this.AddCustomerContract.Name = "AddCustomerContract";
-            this.AddCustomerContract.Size = new System.Drawing.Size(167, 24);
-            this.AddCustomerContract.TabIndex = 4;
-            // 
-            // AddExecutinContract
-            // 
-            this.AddExecutinContract.FormattingEnabled = true;
-            this.AddExecutinContract.Location = new System.Drawing.Point(140, 139);
-            this.AddExecutinContract.Margin = new System.Windows.Forms.Padding(4);
-            this.AddExecutinContract.Name = "AddExecutinContract";
-            this.AddExecutinContract.Size = new System.Drawing.Size(167, 24);
-            this.AddExecutinContract.TabIndex = 3;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -198,23 +197,21 @@
             this.label14.TabIndex = 0;
             this.label14.Text = "Номер";
             // 
-            // label2
+            // AddExecutinContract
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 248);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 16);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Стоимость";
+            this.AddExecutinContract.Location = new System.Drawing.Point(138, 143);
+            this.AddExecutinContract.Margin = new System.Windows.Forms.Padding(4);
+            this.AddExecutinContract.Name = "AddExecutinContract";
+            this.AddExecutinContract.Size = new System.Drawing.Size(167, 22);
+            this.AddExecutinContract.TabIndex = 16;
             // 
-            // textBox1
+            // AddCustomerContract
             // 
-            this.textBox1.Location = new System.Drawing.Point(138, 245);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(167, 22);
-            this.textBox1.TabIndex = 15;
+            this.AddCustomerContract.Location = new System.Drawing.Point(138, 113);
+            this.AddCustomerContract.Margin = new System.Windows.Forms.Padding(4);
+            this.AddCustomerContract.Name = "AddCustomerContract";
+            this.AddCustomerContract.Size = new System.Drawing.Size(167, 22);
+            this.AddCustomerContract.TabIndex = 17;
             // 
             // MunicipalContractCard
             // 
@@ -241,12 +238,12 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button ButtonCreateMunicipalContract;
         public System.Windows.Forms.TextBox AddNomerContract;
-        public System.Windows.Forms.ComboBox AddCustomerContract;
-        public System.Windows.Forms.ComboBox AddExecutinContract;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         public System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.TextBox AddCustomerContract;
+        public System.Windows.Forms.TextBox AddExecutinContract;
     }
 }

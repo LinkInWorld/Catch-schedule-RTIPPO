@@ -43,6 +43,14 @@ namespace lab6
             return DB.ListLocalitySelectid_Locality();
         }
 
+        public MunicipalContract ViewMunicipalContractCard(int idmunisipalContract)
+        {
+            table = DB.SelectViewMunicipalContractCard(idmunisipalContract);
+            MunicipalContract municipalContract = new MunicipalContract(table);
+            return municipalContract;
+
+        }
+
         /*public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
             filt = "";
@@ -80,15 +88,5 @@ namespace lab6
 
         }
 
-        public void ViewMunicipalConrtactCard()
-        {
-            th = new Thread(open);
-            th.SetApartmentState(ApartmentState.STA);
-            th.Start();
-        }
-        void open(object obj)
-        {
-            Application.Run(new MunicipalContractCard());
-        }
     }
 }

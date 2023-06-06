@@ -104,6 +104,16 @@ namespace lab6
             string sql = "SELECT id_Locality, Name FROM Locality";
             return SelectFromDB(sql);
         }
+        public static DataTable ListLocalityAndPriceForMC(int id_MunicipalContract)
+        {
+            string sql = "SELECT * FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract;
+            return SelectFromDB(sql);
+        }
+        public static DataTable SelectViewMunicipalContractCard(int id_MunicipalContract)
+        {
+            string sql = "SELECT id_RecordingContract, Name, Recording_Contract.Price FROM Recording_Contract INNER JOIN Locality ON Recording_Contract.id_Locality = Locality.id_Locality WHERE id_MunicipalContract = '" + id_MunicipalContract.ToString()+"'";
+            return SelectFromDB(sql);
+        }
         public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
         {
             ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);

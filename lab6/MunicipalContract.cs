@@ -15,6 +15,8 @@ namespace lab6
         public string dateOfExecotion;
         public int customer;
         public int executor;
+        public DataTable tableLocalyty;
+        public int price;
 
         public MunicipalContract(DataTable table)
         {
@@ -27,11 +29,24 @@ namespace lab6
                 customer = int.Parse(row[4].ToString());
                 executor = int.Parse(row[5].ToString());
             }
+            tableLocalyty = DB.ListLocalityAndPriceForMC(id);
+            price = GetToSummPriceMC(tableLocalyty);
+            
 
         }
         public MunicipalContract()
         {          
 
+        }
+
+        public int GetToSummPriceMC(DataTable table)
+        {
+            int summ = 0;
+            foreach (DataRow row in table.Rows)
+            {
+                summ += int.Parse(row[2].ToString());
+            }
+            return summ;
         }
 
     }
