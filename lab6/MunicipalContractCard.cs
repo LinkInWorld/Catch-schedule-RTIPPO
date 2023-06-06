@@ -25,7 +25,7 @@ namespace lab6
                 AddDateExeContract.ReadOnly = true;
                 AddCustomerContract.ReadOnly = true;
                 AddExecutinContract.ReadOnly = true;
-                //AddLocalityContract.ReadOnly = true;
+                AddLocalityContract.Enabled = true;
                 ButtonCreateMunicipalContract.Enabled = false;
             }
             textBox1.ReadOnly = true;
@@ -33,10 +33,9 @@ namespace lab6
             AddDateConContract.Text = munnicipalContract.dateOfConclusion.ToString();
             AddDateExeContract.Text = munnicipalContract.dateOfExecotion.ToString();
             AddCustomerContract.Text = munnicipalContract.customer.ToString();
-            AddExecutinContract.Text = munnicipalContract.executor.ToString();/*
+            AddExecutinContract.Text = munnicipalContract.executor.ToString();
             AddLocalityContract.DataSource = munnicipalContract.tableLocalyty;
             AddLocalityContract.DisplayMember = "Name";
-            AddLocalityContract.ValueMember = "id_Locality";*/
             textBox1.Text = munnicipalContract.price.ToString();
         }
 

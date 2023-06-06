@@ -13,8 +13,8 @@ namespace lab6
         public int number;
         public string dateOfConclusion;
         public string dateOfExecotion;
-        public int customer;
-        public int executor;
+        public string customer;
+        public string executor;
         public DataTable tableLocalyty;
         public int price;
 
@@ -26,8 +26,8 @@ namespace lab6
                 number = int.Parse(row[1].ToString());
                 dateOfConclusion = (row[2].ToString());
                 dateOfExecotion = (row[3].ToString());
-                customer = int.Parse(row[4].ToString());
-                executor = int.Parse(row[5].ToString());
+                customer = row[4].ToString();
+                executor = row[5].ToString();
             }
             tableLocalyty = DB.ListLocalityAndPriceForMC(id);
             price = GetToSummPriceMC(tableLocalyty);

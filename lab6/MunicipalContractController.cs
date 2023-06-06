@@ -51,18 +51,11 @@ namespace lab6
 
         }
 
-        /*public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
+        public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
-            filt = "";
             DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
-            table = DB.ListMunicipalContractsSelect(user, filt);
-            table.Columns["Number"].ColumnName = "Номер";
-            table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
-            table.Columns["Date_of_execution"].ColumnName = "Дата действия";
-            table.Columns["Customer"].ColumnName = "Заказчик";
-            table.Columns["Executor"].ColumnName = "Исполнитель";
-            return table;
-        }*/
+            return getListMunicipalContract(sort, filtr);
+        }
 
         /*public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
         {
