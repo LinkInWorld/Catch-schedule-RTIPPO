@@ -17,10 +17,34 @@ namespace lab6
     {
         String loginUser;
         String passUser;
+        User user;
         AuthController authController = new AuthController();
+        private Thread th;
+
         public AuthForm()
         {
             InitializeComponent();
+        }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            loginUser = loginField.Text;
+            passUser = passField.Text;
+            user = authController.AythMetod(loginUser, passUser);
+            if(user != null) 
+            {
+                //MessageBox.Show(user.name);
+                this.Close();
+                th = new Thread(open);
+                th.SetApartmentState(ApartmentState.STA);
+                th.Start();
+            }
+            else MessageBox.Show("Такого пользователя нет в системе.");
+        }
+
+        void open(object obj)
+        {
+            Application.Run(new MainForm(user));
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -36,13 +60,6 @@ namespace lab6
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void buttonLogin_Click(object sender, EventArgs e)
-        {
-            loginUser = loginField.Text;
-            passUser = passField.Text;
-            authController.AythMetod(loginUser, passUser);
         }
     }
 }

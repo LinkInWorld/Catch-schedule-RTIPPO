@@ -15,7 +15,19 @@ namespace lab6
             {
                 return new CuratorVebService(user);
             }
-            return new CuratorVebService(user);
+            else if (user.role.name == "Подписант ВетСлужбы")
+            {
+                return new SignatorVetService(user);
+            }
+            else if (user.role.name == "Оператор ВетСлужбы")
+            {
+                return new OpertorVetService(user);
+            }
+            else if (user.role.name == "Оператор по отлову")
+            {
+                return new OperatorTrapping(user);
+            }
+            return new Other(user);
         }
     }
 }

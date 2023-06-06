@@ -104,6 +104,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="Role\OperatorTrapping.cs" />
+    <Compile Include="Role\OpertorVetService.cs" />
+    <Compile Include="Role\Other.cs" />
+    <Compile Include="Role\SignatorVetService.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="User.cs" />
     <EmbeddedResource Include="AuthForm.resx">

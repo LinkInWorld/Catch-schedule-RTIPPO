@@ -16,7 +16,8 @@ namespace lab6
 {
     internal class MunicipalContractController
     {
-        public User user;
+        public User user = Session.GetCurrentUser();
+        public PMFactory PMFactory = new PMFactory();
         public DataTable table = new DataTable();
         public string filt;
         Thread th;
@@ -71,6 +72,14 @@ namespace lab6
             table.Columns["Date_of_execution"].ColumnName = "Дата действия";
             table.Columns["Customer"].ColumnName = "Заказчик";
             table.Columns["Executor"].ColumnName = "Исполнитель";
+            return table;
+        }
+
+        public DataTable DeleteMunicipalContract(MunicipalContract municipalContract)
+        {
+            PM pm = PMFactory.GetUserPM(user);
+
+            MessageBox.Show(pm.ToString());
             return table;
         }
 

@@ -99,7 +99,7 @@ namespace lab6
 
         private void ButtonDeleteMunicipalContract_Click_1(object sender, EventArgs e)
         {
-            if(user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            /*if(user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
                 table = MunicipalContractController.SelectDeleteMunicipalContract(Convert.ToInt32(dataGridView3.SelectedCells[0].Value.ToString()), user);
                 dataGridView3.DataSource = null;
@@ -110,7 +110,9 @@ namespace lab6
             else
             {
                 MessageBox.Show("У вас недостаточно прав для удаления записи!");
-            }
+            }*/
+            MunicipalContract municipalContract = new MunicipalContract();
+            MunicipalContractController.DeleteMunicipalContract(municipalContract);
         }
 
         private void ButtonSortFiltrMunicipalContract_Click(object sender, EventArgs e)

@@ -59,6 +59,18 @@ namespace lab6
             closeConnection();  
         }
 
+        public void Delete(object obj)
+        {
+            if (obj is MunicipalContract)
+            {
+                //ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
+                //ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
+                MessageBox.Show("удалено");
+            }
+        }
+
+
+
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;

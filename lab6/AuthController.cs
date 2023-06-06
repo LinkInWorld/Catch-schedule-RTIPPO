@@ -13,12 +13,11 @@ namespace lab6
     public class AuthController
     {
         public User user;
-        Thread th;
         DataTable table = new DataTable();
         PMFactory PMFactory = new PMFactory();
 
 
-        public void AythMetod(string loginUser, string passUser) // сделать, чтоб возвращал USer
+        public User AythMetod(string loginUser, string passUser)
         {
             table = DB.AuthSelectInBD(loginUser, passUser);
             if (table.Rows.Count > 0)
@@ -26,21 +25,13 @@ namespace lab6
                 user = new User(table);
                 PM pm = PMFactory.GetUserPM(user);
                 Session.SetContext(user, pm);
-                Application.Exit();
-                th = new Thread(open); // создавать должна форма
-                th.SetApartmentState(ApartmentState.STA);
-                th.Start();
-                bool b = Session.GetCurrentPM().CanUpdate(new MunicipalContract());
+                //bool b = Session.GetCurrentPM().CanUpdate(new MunicipalContract());
+                return user;
             }
             else
             {
-                MessageBox.Show("Введенные данные не верны!");
+                return null;
             }
-        }
-
-        void open(object obj)
-        {
-            Application.Run(new MainForm(user));
         }
     }
 }
