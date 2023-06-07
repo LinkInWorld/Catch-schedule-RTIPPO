@@ -31,7 +31,7 @@ namespace lab6
                 executor = row[5].ToString();
             }
             tableLocalyty = DB.ListLocalityAndPriceForMC(id);
-            price = GetToSummPriceMC(tableLocalyty);            
+            price = GetToSummPriceMC(tableLocalyty);
 
         }
 
@@ -43,7 +43,7 @@ namespace lab6
             dateOfExecotion = (record[2].ToString());
             customer = record[4].ToString();
             executor = record[5].ToString();
-            for(int i = 0; i < arrayLocalityContract.Count; i++)
+            for (int i = 0; i < arrayLocalityContract.Count; i++)
             {
                 if (tableLocalyty != null) tableLocalyty.Merge(DB.ListLocalityFromMC(arrayLocalityContract[i].ToString()));
                 else tableLocalyty = DB.ListLocalityFromMC(arrayLocalityContract[i].ToString());
@@ -54,7 +54,7 @@ namespace lab6
 
         }
         public MunicipalContract()
-        {          
+        {
 
         }
 

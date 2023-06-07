@@ -124,14 +124,7 @@ namespace lab6
             int idmunisipalContract = Convert.ToInt32(dataGridView3.SelectedCells[0].Value.ToString());
             MunicipalContractCard municipalContractCard = new MunicipalContractCard(idmunisipalContract);
             municipalContractCard.ShowDialog();
-            /*th = new Thread(open);
-            th.SetApartmentState(ApartmentState.STA);
-            th.Start();*/
         }
-        /*void open(object obj)
-        {
-            Application.Run(new MunicipalContractCard(idmunisipalContract));
-        }*/
 
 
         // Илья

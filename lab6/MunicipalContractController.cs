@@ -61,8 +61,8 @@ namespace lab6
         {
             if (canUpdate)
             {
-                MunicipalContract municipalContract = new MunicipalContract(record, arrayLocalityContract);            
-                    
+                MunicipalContract municipalContract = new MunicipalContract(record, arrayLocalityContract);
+
                 DB.SelectCreateMunicipalContract(municipalContract);
             }
             else MessageBox.Show("У вас недостаточно прав для удаления записи!");
