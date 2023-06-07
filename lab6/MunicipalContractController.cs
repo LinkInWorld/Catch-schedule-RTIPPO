@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Windows.Forms;
@@ -33,7 +34,11 @@ namespace lab6
             table = table.DefaultView.ToTable();
             return table;
         }
-
+        public void UpdateMunicipalContract(int idmunisipalContract, ArrayList record, List<string> locality)
+        {
+            //if (canUpdate)
+            DB.SelectUpdateMunicipalContract(idmunisipalContract, record, locality);
+        }
         public DataTable getListOrganization()
         {
             return DB.ListOrganizationNameSelect();
