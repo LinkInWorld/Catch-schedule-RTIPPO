@@ -22,16 +22,16 @@ namespace lab6
             this.id = idmunisipalContract;
             InitializeComponent();
             munnicipalContract = MunicipalContractController.ViewMunicipalContractCard(idmunisipalContract);
-            //if (!canUpdate)
-            //{
-            //    AddNomerContract.ReadOnly = true;
-            //    AddDateConContract.ReadOnly = true;
-            //    AddDateExeContract.ReadOnly = true;
-            //    AddCustomerContract.ReadOnly = true;
-            //    AddExecutinContract.ReadOnly = true;
-            //    AddLocalityContract.Enabled = true;
-            //    ButtonCreateMunicipalContract.Enabled = false;
-            //}
+            if (!canUpdate)
+            {
+                AddNomerContract.ReadOnly = true;
+                AddDateConContract.ReadOnly = true;
+                AddDateExeContract.ReadOnly = true;
+                AddCustomerContract.ReadOnly = true;
+                AddExecutinContract.ReadOnly = true;
+                AddLocalityContract.Enabled = true;
+                ButtonCreateMunicipalContract.Enabled = false;
+            }
             AddLocalityContract.SelectedIndex= -1;
             textBox1.ReadOnly = true;
             AddNomerContract.Text = munnicipalContract.number.ToString();
@@ -54,6 +54,7 @@ namespace lab6
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
+            
             List<string> lst = new List<string>();
             foreach(string i in AddLocalityContract.SelectedItems)
                 lst.Add(i);

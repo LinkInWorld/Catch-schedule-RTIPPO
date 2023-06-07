@@ -214,6 +214,7 @@ namespace lab6
             table = planSchController.getListPlanSchedule(catchSheduleTextBox2.Text, sort);
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[4].Visible = false;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -250,6 +251,11 @@ namespace lab6
 
         private void catchPlanScheduleButton3_Click(object sender, EventArgs e)
         {
+            string sort = "";
+            if (catchPlanScheduleRadioButton1.Checked) sort = catchPlanScheduleRadioButton1.Tag.ToString();
+            if (catchPlanScheduleRadioButton2.Checked) sort = catchPlanScheduleRadioButton2.Tag.ToString();
+            if (catchPlanScheduleRadioButton3.Checked) sort = catchPlanScheduleRadioButton3.Tag.ToString();
+            table = planSchController.getListPlanSchedule(catchSheduleTextBox2.Text, sort);
             planSchController.openInExcel(table);
         }
 

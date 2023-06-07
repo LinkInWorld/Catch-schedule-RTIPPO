@@ -15,7 +15,7 @@ namespace lab6
 {
     internal class DB
     {
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO2\\lab6\\db.sqlite3");
         //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
 
 
@@ -145,59 +145,63 @@ namespace lab6
 
         public static void SelectUpdateMunicipalContract(int id, ArrayList record, List<string> locality)
         {
-            DataTable table1 = SelectFromDB(
+            //Получение id Customer
+            DataTable Customer = SelectFromDB(
                 "SELECT [Organization].id_Organization " +
                 "FROM Organization " +
                 "WHERE [Organization].Name = '" + record[3] + "'"
                 );
-            DataTable table2 = SelectFromDB(
+            //Получение id Executor
+            DataTable Executor = SelectFromDB(
                 "SELECT [Organization].id_Organization " +
                 "FROM Organization " +
                 "WHERE [Organization].Name = '" + record[4] + "'"
                 );
-            int i = 0;
-            //ArrayList arr = (ArrayList)record[5];
-            List<string> list = new List<string>();
+            // Запрос на изменение таблицы муниципального контракта
             ExecuteQueryWithAnswer("UPDATE Municipal_contract SET " +
                 "Number = '"+ record[0] + "'," +
                 "Date_of_conclusion = '"+ record[1] + "'," +
                 "Date_of_execution = '" + record[2] + "'," +
-                "Customer = '" + table1.Rows[0][0] + "'," +
-                "Executor = '" + table2.Rows[0][0] + "' " +
+                "Customer = '" + Customer.Rows[0][0] + "'," +
+                "Executor = '" + Executor.Rows[0][0] + "' " +
                 "WHERE id_MunicipalContract = '"+id+"' ");
-            DataTable infoRec = SelectFromDB("SELECT * FROM Recording_Contract WHERE id_MunicipalContract = '" + record[5] + "'");
-            DataTable infoRecordingCont = new DataTable();
-            
-            DataTable table3 = ListIdLocalitySelect(locality);
-            for(int j = 0;j< table3.Rows.Count; j++)
+            // Получение таблицы Recording_Contract c неизменёнными данными, нужен для получения кол-ва записей
+            DataTable infoRec = SelectFromDB(
+                    "SELECT [Recording_Contract].id_RecordingContract, [Recording_Contract].id_MunicipalContract, [Locality].Name " +
+                    "FROM Recording_Contract,Locality WHERE id_MunicipalContract = '" + record[5] + "' AND [Recording_Contract].id_Locality = [Locality].id_Locality "
+                );
+
+            //Изменение при уменьшенном числе выбранных городов
+            DataTable excessLocalityTable = ListIdLocalitySelect(locality); // Получение таблицы со списком городов на удаление
+            for (int j = 0;j< excessLocalityTable.Rows.Count; j++)
             {
-                ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_Locality = '" + table3.Rows[j][0].ToString() + "' AND id_MunicipalContract = '" + record[5] + "' ");
+                ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_Locality = '" + excessLocalityTable.Rows[j][0].ToString() + "' AND id_MunicipalContract = '" + record[5] + "' ");
             }
+            int i = 0;
+            List<string> list = new List<string>();
             foreach (var nameLocality in locality)
             {
-
                 DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + nameLocality + "'");
-                infoRecordingCont = SelectFromDB("SELECT * FROM Recording_Contract WHERE id_MunicipalContract = '" + record[5] + "'");
-                ExecuteQueryWithAnswer(
+                DataTable infoRecordingContract = SelectFromDB("SELECT * FROM Recording_Contract WHERE id_MunicipalContract = '" + record[5] + "'");
+                if(i < infoRec.Rows.Count)
+                {
+                    ExecuteQueryWithAnswer(
                     "UPDATE Recording_Contract SET " +
                     "id_Locality = '" + infoLocality.Rows[0][0] + "'," +
                     "id_MunicipalContract = '" + record[5] + "'," +
-                    "Price = '"+ infoLocality.Rows[0][2] + "' " +
-                    "WHERE id_RecordingContract = '"+ infoRecordingCont.Rows[i][0] + "' ");
-
+                    "Price = '" + infoLocality.Rows[0][2] + "' " +
+                    "WHERE id_RecordingContract = '" + infoRecordingContract.Rows[i][0] + "' ");
+                }
+                if (i >= infoRec.Rows.Count)
+                {
+                    ExecuteQueryWithAnswer(
+                        "INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) " +
+                        "VALUES (" + Convert.ToInt32(infoLocality.Rows[0][0]) + ", " + record[5] + ", " + Convert.ToInt32(infoLocality.Rows[0][2]) + ")");
+                }
                 i++;
-
-                //Тут как то должна добавляться запись
-                //if (locality.Count > infoRec.Rows.Count)
-                //{
-                //    ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + Convert.ToInt32(infoLocality.Rows[0][0]) + ", " + Convert.ToInt32(idNewContract.Rows[0][0]) + ", " + Convert.ToInt32(infoLocality.Rows[0][2]) + ")");
-
-                //}
             }
-            
-            
-            //ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES (" + id + ", '" + record[0] + "', '" + record[1] + "', '" + Convert.ToInt32(record[2]) + "', '" + Convert.ToInt32(record[3]) + "')");
         }
+        //Метод на получение таблицы с городами на удаление
         public static DataTable ListIdLocalitySelect(List<string> names)
         {
             string sql = "SELECT [Locality].id_Locality, [Locality].Name FROM Locality WHERE [Locality].Name != '" + names[0] + "' ";
@@ -208,12 +212,6 @@ namespace lab6
             DataTable table = SelectFromDB(sql);
             return table;
         }
-        //       "UPDATE Plan_Schedule SET " +
-        //       "id_Locality = '" + table.Rows[0][0] +"'," +
-        //       "Month = '" + record[1] +"'," +
-        //       "Year = '" + record[2] +"'," +
-        //       "PDF_path = '" + record[3] +"' " +
-        //       "WHERE id = " + idSelectedPlanSchedule + ";");
 
 
 
