@@ -15,8 +15,8 @@ namespace lab6
 {
     internal class DB
     {
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
 
 
         static SQLiteCommand cmd = new SQLiteCommand();
@@ -49,7 +49,6 @@ namespace lab6
         }
 
         // Таня
-        // ГОТОВО
         public static DataTable AuthSelectInBD(string loginUser, string passUser)
         {
             string sql = "SELECT *, Role.Name AS Rolename FROM User INNER JOIN Role ON User.id_Role = Role.id_Role WHERE Login = " + loginUser + " AND Password = " + passUser;
@@ -104,37 +103,38 @@ namespace lab6
             string sql = "SELECT id_Locality, Name FROM Locality";
             return SelectFromDB(sql);
         }
+
         public static DataTable ListLocalityAndPriceForMC(int id_MunicipalContract)
         {
             string sql = "SELECT id_RecordingContract, Name, Recording_Contract.Price FROM Recording_Contract INNER JOIN Locality ON Recording_Contract.id_Locality = Locality.id_Locality WHERE id_MunicipalContract = " + id_MunicipalContract;
             return SelectFromDB(sql);
         }
+
+        public static DataTable ListLocalityFromMC(string nameLocality)
+        {
+            string sql = "SELECT id_Locality, Name, Price FROM Locality WHERE Name = '" + nameLocality+"'";
+            return SelectFromDB(sql);
+        }
+
         public static DataTable SelectViewMunicipalContractCard(int id_MunicipalContract)
         {
             string sql = "SELECT id_MunicipalContract, Number, Date_of_conclusion, Date_of_execution, o1.Name AS Customer, o2.Name AS Executor FROM Municipal_contract INNER JOIN Organization o1 ON Municipal_contract.Customer = o1.id_Organization INNER JOIN Organization o2 ON Municipal_contract.Executor = o2.id_Organization WHERE id_MunicipalContract = " + id_MunicipalContract;
             return SelectFromDB(sql);
         }
+
         public static void SelectDeleteMunicipalContract(int id_MunicipalContract)
         {
             ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
             ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
         }
 
-
-
-        // ПРОСМОТРИ БЛИН
-
-        
-        public static void SelectCreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
+        public static void SelectCreateMunicipalContract(MunicipalContract municipalContract)
         {
-            ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', '" + Convert.ToInt32(record[4]) + "', '" + Convert.ToInt32(record[5]) + "')");
-            DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(record[0]));
-            foreach (var nameLocality in arrayLocalityContract)
+            ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ('"+ municipalContract.number + "', '"+ municipalContract.dateOfConclusion + "', '"+ municipalContract.dateOfExecotion + "', '" + municipalContract.customer + "', '" + municipalContract.executor + "')");
+            DataTable idNewContract = SelectFromDB("SELECT id_MunicipalContract FROM Municipal_contract WHERE Number = " + Convert.ToInt32(municipalContract.number));
+            for(int i = 0; i < municipalContract.tableLocalyty.Rows.Count; i++)
             {
-                 //MessageBox.Show(nameLocality.ToString());
-                 DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + nameLocality+"'");
-                 //MessageBox.Show(""+ Convert.ToInt32(infoLocality.Rows[0][2]));
-
+                DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + municipalContract.tableLocalyty.Rows[i][1].ToString() + "'");
                 ExecuteQueryWithAnswer("INSERT INTO Recording_Contract (id_Locality, id_MunicipalContract, Price) VALUES (" + Convert.ToInt32(infoLocality.Rows[0][0]) + ", " + Convert.ToInt32(idNewContract.Rows[0][0]) + ", " + Convert.ToInt32(infoLocality.Rows[0][2]) + ")");
             }
         }

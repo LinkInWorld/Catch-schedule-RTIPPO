@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System.Collections;
+using System.Data;
 using System.Threading;
 using System.Windows.Forms;
 using Application = System.Windows.Forms.Application;
@@ -53,7 +54,15 @@ namespace lab6
 
         public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
-            DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
+            /*DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
+            return getListMunicipalContract(sort, filtr);*/
+            if (canUpdate)
+            {
+                MunicipalContract municipalContract = new MunicipalContract(record, arrayLocalityContract);            
+                    
+                DB.SelectCreateMunicipalContract(municipalContract);
+            }
+            else MessageBox.Show("У вас недостаточно прав для удаления записи!");
             return getListMunicipalContract(sort, filtr);
         }
 

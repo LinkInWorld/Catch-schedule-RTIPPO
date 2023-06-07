@@ -74,34 +74,28 @@ namespace lab6
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
-            /*if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            ArrayList arrayLocalityContract = new ArrayList();
+            var selectedObject = AddLocalityContract.SelectedItems;
+            var val = "";
+            foreach (DataRowView i in selectedObject)
             {
-                ArrayList arrayLocalityContract = new ArrayList();
-                var selectedObject = AddLocalityContract.SelectedItems;
-                var val = "";
-                foreach (DataRowView i in selectedObject)
-                {
-                    val = i.Row.ItemArray[1].ToString();
-                    arrayLocalityContract.Add(val);
-                }
-                //MessageBox.Show(arrayLocalityContract[0].ToString());
-                ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
-                table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, arrayLocalityContract);
-                dataGridView3.DataSource = null;
-                dataGridView3.DataSource = table;
-                dataGridView3.Columns[0].Visible = false;
-                dataGridView3.Update();
+                val = i.Row.ItemArray[1].ToString();
+                arrayLocalityContract.Add(val);
             }
-            else
-            {
-                MessageBox.Show("У вас недостаточно прав для создания контракта!");
-            }*/
+            //MessageBox.Show(AddDateConContract.Text.ToString());
+            ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
+
+            table = MunicipalContractController.CreateMunicipalContract(arrayNewContract, arrayLocalityContract);
+            dataGridView3.DataSource = null;
+            dataGridView3.DataSource = table;
+            dataGridView3.Columns[0].Visible = false;
+            dataGridView3.Update();
+            //MessageBox.Show("У вас недостаточно прав для создания контракта!");
 
         }
 
         private void ButtonDeleteMunicipalContract_Click_1(object sender, EventArgs e)
         {
-            DataTable table = new DataTable();
             int idmunisipalContract = Convert.ToInt32(dataGridView3.SelectedCells[0].Value.ToString());
             table = MunicipalContractController.DeleteMunicipalContract(idmunisipalContract);
             dataGridView3.DataSource = null;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -30,8 +31,26 @@ namespace lab6
                 executor = row[5].ToString();
             }
             tableLocalyty = DB.ListLocalityAndPriceForMC(id);
+            price = GetToSummPriceMC(tableLocalyty);            
+
+        }
+
+        public MunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
+        {
+            id = 0;
+            number = int.Parse(record[0].ToString());
+            dateOfConclusion = (record[1].ToString());
+            dateOfExecotion = (record[2].ToString());
+            customer = record[4].ToString();
+            executor = record[5].ToString();
+            for(int i = 0; i < arrayLocalityContract.Count; i++)
+            {
+                if (tableLocalyty != null) tableLocalyty.Merge(DB.ListLocalityFromMC(arrayLocalityContract[i].ToString()));
+                else tableLocalyty = DB.ListLocalityFromMC(arrayLocalityContract[i].ToString());
+            }
+
+            //tableLocalyty = DB.ListLocalityAndPriceForMC(id);
             price = GetToSummPriceMC(tableLocalyty);
-            
 
         }
         public MunicipalContract()
