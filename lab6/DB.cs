@@ -121,12 +121,16 @@ namespace lab6
             ExecuteQueryWithAnswer("DELETE FROM Recording_Contract WHERE id_MunicipalContract = " + id_MunicipalContract);
             ExecuteQueryWithAnswer("DELETE FROM Municipal_contract WHERE id_MunicipalContract = " + id_MunicipalContract);
         }
-
+        public static DataTable ListLocalityFromMC(string nameLocality)
+        {
+            string sql = "SELECT id_Locality, Name, Price FROM Locality WHERE Name = '" + nameLocality + "'";
+            return SelectFromDB(sql);
+        }
 
 
         // ПРОСМОТРИ БЛИН
 
-        
+
         public static void SelectCreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
             ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', '" + Convert.ToInt32(record[4]) + "', '" + Convert.ToInt32(record[5]) + "')");
