@@ -54,8 +54,6 @@ namespace lab6
 
         public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
-            /*DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
-            return getListMunicipalContract(sort, filtr);*/
             if (canUpdate)
             {
                 MunicipalContract municipalContract = new MunicipalContract(record, arrayLocalityContract);            
@@ -66,18 +64,6 @@ namespace lab6
             return getListMunicipalContract(sort, filtr);
         }
 
-        /*public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
-        {
-            filt = "";
-            DB.SelectDeleteMunicipalContract(id_MunicipalContract);
-            table = DB.ListMunicipalContractsSelect(user, filt);
-            table.Columns["Number"].ColumnName = "Номер";
-            table.Columns["Date_of_conclusion"].ColumnName = "Дата Заключения";
-            table.Columns["Date_of_execution"].ColumnName = "Дата действия";
-            table.Columns["Customer"].ColumnName = "Заказчик";
-            table.Columns["Executor"].ColumnName = "Исполнитель";
-            return table;
-        }*/
 
         public DataTable DeleteMunicipalContract(int idmunisipalContract)
         {
