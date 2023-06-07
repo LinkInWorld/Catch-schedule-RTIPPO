@@ -46,7 +46,7 @@ namespace lab6
             }
             for (int i = 0; i < munnicipalContract.tableLocalyty.Rows.Count; i++)
             {
-                AddLocalityContract.SetSelected(Convert.ToInt32(munnicipalContract.tableLocalyty.Rows[i][0].ToString())-1, true);
+                AddLocalityContract.SetSelected(Convert.ToInt32(munnicipalContract.tableLocalyty.Rows[i][3].ToString())-1, true);
             }
             AddLocalityContract.DisplayMember = "Name";
             textBox1.Text = munnicipalContract.price.ToString();

@@ -8,5 +8,9 @@ namespace lab6
 {
     internal class CatchPlanSchedule
     {
+        public CatchPlanSchedule()
+        {
+
+        }
     }
 }

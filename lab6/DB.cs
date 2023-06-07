@@ -15,8 +15,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
 
 
         static SQLiteCommand cmd = new SQLiteCommand();
@@ -107,7 +107,7 @@ namespace lab6
 
         public static DataTable ListLocalityAndPriceForMC(int id_MunicipalContract)
         {
-            string sql = "SELECT id_RecordingContract, Name, Recording_Contract.Price FROM Recording_Contract INNER JOIN Locality ON Recording_Contract.id_Locality = Locality.id_Locality WHERE id_MunicipalContract = " + id_MunicipalContract;
+            string sql = "SELECT id_RecordingContract, Name, Recording_Contract.Price, [Recording_Contract].id_Locality FROM Recording_Contract INNER JOIN Locality ON Recording_Contract.id_Locality = Locality.id_Locality WHERE id_MunicipalContract = " + id_MunicipalContract;
             return SelectFromDB(sql);
         }
 
@@ -175,12 +175,9 @@ namespace lab6
             }
             foreach (var nameLocality in locality)
             {
-                
-                //MessageBox.Show(nameLocality.ToString());
+
                 DataTable infoLocality = SelectFromDB("SELECT * FROM Locality WHERE Name = '" + nameLocality + "'");
                 infoRecordingCont = SelectFromDB("SELECT * FROM Recording_Contract WHERE id_MunicipalContract = '" + record[5] + "'");
-                //MessageBox.Show(""+ Convert.ToInt32(infoLocality.Rows[0][2]));
-
                 ExecuteQueryWithAnswer(
                     "UPDATE Recording_Contract SET " +
                     "id_Locality = '" + infoLocality.Rows[0][0] + "'," +
