@@ -34,7 +34,7 @@ namespace lab6
         public DataTable getDataPlanScheduleCard(string idSelectedPlanSchedule){    return DB.ListDataPlanScheduleCard(idSelectedPlanSchedule); }
 
         //Удаление записи из бд
-        public void getListPlanScheduleDeleted(int idSelectedPlanSchedule, User user)
+        public void getListPlanScheduleDeleted(int idSelectedPlanSchedule)
         {
             if(Session.GetCurrentPM().CanUpdate(new CatchPlanSchedule()))
                 DB.ListPlanScheduleDelete(idSelectedPlanSchedule);

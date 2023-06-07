@@ -233,7 +233,7 @@ namespace lab6
 
         private void catchPlanScheduleButton5_Click(object sender, EventArgs e)
         {
-            planSchController.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), user);
+            planSchController.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()));
             table = planSchController.getListPlanSchedule("","");
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
