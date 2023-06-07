@@ -74,6 +74,27 @@ namespace lab6
 
         private void ButtonCreateMunicipalContract_Click(object sender, EventArgs e)
         {
+            if (!Session.GetCurrentPM().CanUpdate(new MunicipalContract()))
+            {
+                ArrayList arrayLocalityContract = new ArrayList();
+                var selectedObject = AddLocalityContract.SelectedItems;
+                var val = "";
+                foreach (DataRowView i in selectedObject)
+                {
+                    val = i.Row.ItemArray[1].ToString();
+                    arrayLocalityContract.Add(val);
+                }
+                //MessageBox.Show(arrayLocalityContract[0].ToString());
+                ArrayList arrayNewContract = new ArrayList { AddNomerContract.Text, AddDateConContract.Text, AddDateExeContract.Text, AddDateConContract.Text, AddCustomerContract.SelectedValue.ToString(), AddExecutinContract.SelectedValue.ToString() };
+                MunicipalContractController.CreateMunicipalContract(arrayNewContract, arrayLocalityContract);
+                table = MunicipalContractController.getListMunicipalContract(sort, filtr);
+                dataGridView3.DataSource = null;
+                dataGridView3.DataSource = table;
+                dataGridView3.Columns[0].Visible = false;
+                dataGridView3.Update();
+            }
+            else
+                MessageBox.Show("Недостаточно прав для добавления записи");
             /*if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
             {
                 ArrayList arrayLocalityContract = new ArrayList();

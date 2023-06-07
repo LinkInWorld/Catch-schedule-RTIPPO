@@ -1,5 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using Application = System.Windows.Forms.Application;
@@ -51,10 +52,9 @@ namespace lab6
 
         }
 
-        public DataTable CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
+        public void CreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
             DB.SelectCreateMunicipalContract(record, arrayLocalityContract);
-            return getListMunicipalContract(sort, filtr);
         }
 
         /*public DataTable SelectDeleteMunicipalContract(int id_MunicipalContract, User user)
@@ -69,7 +69,11 @@ namespace lab6
             table.Columns["Executor"].ColumnName = "Исполнитель";
             return table;
         }*/
-
+        public void UpdateMunicipalContract(int idmunisipalContract, ArrayList record, List<string> locality)
+        {
+            //if (canUpdate)
+                DB.SelectUpdateMunicipalContract(idmunisipalContract, record, locality);
+        }
         public DataTable DeleteMunicipalContract(int idmunisipalContract)
         {
             if (canUpdate)

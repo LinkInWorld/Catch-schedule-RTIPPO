@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace lab6
 {
@@ -24,12 +25,13 @@ namespace lab6
             {
                 id = int.Parse(row[0].ToString());
                 number = int.Parse(row[1].ToString());
-                dateOfConclusion = (row[2].ToString());
-                dateOfExecotion = (row[3].ToString());
+                dateOfConclusion = row[2].ToString();
+                dateOfExecotion = row[3].ToString();
                 customer = row[4].ToString();
                 executor = row[5].ToString();
             }
             tableLocalyty = DB.ListLocalityAndPriceForMC(id);
+
             price = GetToSummPriceMC(tableLocalyty);
             
 
