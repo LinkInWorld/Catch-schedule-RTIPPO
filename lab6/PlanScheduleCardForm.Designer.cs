@@ -147,7 +147,7 @@
             "September",
             "October",
             "November",
-            "December "});
+            "December"});
             this.comboBox1.Location = new System.Drawing.Point(111, 86);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(100, 21);

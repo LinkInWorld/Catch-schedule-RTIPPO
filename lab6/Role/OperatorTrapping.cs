@@ -15,6 +15,10 @@ namespace lab6
             {
                 return false;
             }
+            if (obj is CatchPlanSchedule)
+            {
+                return false;
+            }
             return false;
         }
         public override bool CanUpdate(object obj)
@@ -22,6 +26,10 @@ namespace lab6
             if (obj is MunicipalContract)
             {
                 return false;
+            }
+            if (obj is CatchPlanSchedule)
+            {
+                return true;
             }
             return false;
         }

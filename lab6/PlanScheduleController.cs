@@ -2,55 +2,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace lab6
 {
     internal class PlanScheduleController
     {
-        public User user;
         public DataTable table = new DataTable();
 
-
         // получение таблицы из бд
-        public DataTable getListPlanSchedule(User user) {   return DB.ListPlanScheduleSelect(user); }
+        public DataTable getListPlanSchedule(string filter, string sort) 
+        {
+            bool roleFilter = Session.GetCurrentPM().CanWatchAll(new CatchPlanSchedule());
+            table = DB.ListPlanScheduleSelect(filter, roleFilter);
+            table.Columns[0].ColumnName = "id";
+            table.Columns[1].ColumnName = "Name";
+            table.Columns[2].ColumnName = "Month";
+            table.Columns[3].ColumnName = "Year";
+
+            table.DefaultView.Sort = sort;
+            table = table.DefaultView.ToTable();
+
+            return table; 
+        }
 
         //Получение данных выбранной учетной карточки
         public DataTable getDataPlanScheduleCard(string idSelectedPlanSchedule){    return DB.ListDataPlanScheduleCard(idSelectedPlanSchedule); }
 
         //Удаление записи из бд
-        public DataTable getListPlanScheduleDeleted(int idSelectedPlanSchedule, User user)
+        public void getListPlanScheduleDeleted(int idSelectedPlanSchedule, User user)
         {
-
-            DB.ListPlanScheduleDelete(idSelectedPlanSchedule);
-            table = DB.ListPlanScheduleSelect(user);
-            return table;
+            if(Session.GetCurrentPM().CanUpdate(new CatchPlanSchedule()))
+                DB.ListPlanScheduleDelete(idSelectedPlanSchedule);
+            else
+                MessageBox.Show("Нет прав на Удаление");
         }
 
         //Добавление записи в бд
-        public DataTable getListPlanScheduleInserted(ArrayList record, User user)
+        public void getListPlanScheduleInserted(ArrayList record)
         {
-            DB.ListPlanScheduleInsert(record);
-            table = DB.ListPlanScheduleSelect(user);
-            return table;
+            if (Session.GetCurrentPM().CanUpdate(new CatchPlanSchedule()))
+                DB.ListPlanScheduleInsert(record);
+            else
+                MessageBox.Show("Нет прав на Добавление");
         }
 
         //Изменение записи в бд
-        public DataTable getListPlanScheduleUpdated(User user, int idSelectedPlanSchedule, ArrayList record)
+        public void getListPlanScheduleUpdated(int idSelectedPlanSchedule, ArrayList record)
         {
-
-            DB.ListPlanScheduleUpdate(idSelectedPlanSchedule, record);
-            table = DB.ListPlanScheduleSelect(user);
-            return table;
-        }
-
-        //Таблица с параметрами фильтрации и сортировки
-        public DataTable getListPlanScheduleFiltered(string filter, string sort)
-        {
-            table = DB.ListPlanScheduleFilterSelect(filter, sort);
-            return table;
+            if (Session.GetCurrentPM().CanUpdate(new CatchPlanSchedule()))
+                DB.ListPlanScheduleUpdate(idSelectedPlanSchedule, record);
+            else
+                MessageBox.Show("Нет прав на Изменение");
         }
 
         //Получение списка Нас. пунктов из бд
@@ -62,6 +69,14 @@ namespace lab6
                 lst.Add(table.Rows[i][0].ToString());
 
             return lst;
+        }
+        public void openInExcel(DataTable table)
+        {
+            ExportMaster.exportExcel(table);
+        }
+        public string attachPDF()
+        {
+            return ImportMaster.AttachPDF();
         }
     }
 }

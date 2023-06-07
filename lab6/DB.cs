@@ -15,8 +15,8 @@ namespace lab6
 {
     internal class DB
     {
-        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
-        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\Poldnik999\\source\\repos\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
+        //static SQLiteConnection connection = new SQLiteConnection("Data Source=C:\\Users\\kwa\\Documents\\GitHub\\Catch-schedule-RTIPPO\\lab6\\db.sqlite3");
 
 
         static SQLiteCommand cmd = new SQLiteCommand();
@@ -41,7 +41,7 @@ namespace lab6
         {
             DataTable table = new DataTable();
             SQLiteDataAdapter adapter = new SQLiteDataAdapter();
-            SQLiteCommand cmd = new SQLiteCommand(Sring, getConnection());
+            cmd = new SQLiteCommand(Sring, getConnection());
 
             adapter.SelectCommand = cmd;
             adapter.Fill(table);
@@ -124,7 +124,7 @@ namespace lab6
 
         // ПРОСМОТРИ БЛИН
 
-
+        
         public static void SelectCreateMunicipalContract(ArrayList record, ArrayList arrayLocalityContract)
         {
             ExecuteQueryWithAnswer("INSERT INTO Municipal_contract (Number, Date_of_conclusion, Date_of_execution, Customer, Executor) VALUES ("+Convert.ToInt32(record[0])+", '"+ record[1] + "', '"+ record[2] + "', '" + Convert.ToInt32(record[4]) + "', '" + Convert.ToInt32(record[5]) + "')");
@@ -142,7 +142,7 @@ namespace lab6
         
 
 
-        // Никита
+        // Никита ///////////////////////////////////////////////////////////////////////////////////////////////
         // Список населенных пунктов
         public static DataTable ListLocaitySelect()
         {
@@ -150,6 +150,8 @@ namespace lab6
             DataTable table = SelectFromDB(sql);
             return table;
         }
+
+        // Запрос к бд на изменение
         public static string ExecuteQueryWithAnswer(string query)
         {
             openConnection();
@@ -160,23 +162,46 @@ namespace lab6
             if (answer != null) return answer.ToString();
             else return null;
         }
-        public static DataTable ListPlanScheduleSelect(User user)
+
+        // Возвращение таблицы с учетом ограничения роли пользователя и фильтрации
+        public static DataTable ListPlanScheduleSelect(string filter, bool roleFilter)
         {
+            string sql = "";
             DataTable table = new DataTable();  
-            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы")
+            if (roleFilter)
             {
-                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
+                sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
                          "FROM Plan_Schedule, Locality " +
                          "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
                 table = SelectFromDB(sql);
             }
-            else if (user.role.name == "Оператор по отлову" || user.role.name == "Оператор ОМСУ")
+            else
             {
-                string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
+                sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
                          "FROM Plan_Schedule, Locality " +
-                         "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
+                         "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality " +
+                         "AND [Plan_Schedule].id_Organization = '"+Session.GetCurrentUser().idOrganization+"' ";
+
                 table = SelectFromDB(sql);
             }
+            string cellValue = ""; 
+            table.Columns[0].ColumnName = "id"; table.Columns[1].ColumnName = "Name"; table.Columns[2].ColumnName = "Month"; table.Columns[3].ColumnName = "Year";
+
+            if (filter != "")
+                for (int i = 0; i < table.Rows.Count; i++)
+                    for (int j = 0; j < table.Columns.Count; j++)
+                    {
+                        cellValue = table.Rows[i][j].ToString();
+                        if (cellValue.Contains(filter))
+                        {
+                            if (table.Columns[j].ColumnName.ToString() != "Name")
+                                sql += "AND [Plan_schedule]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                            else
+                                sql += "AND [Locality]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
+                        }
+
+                    }
+            table = SelectFromDB(sql);
             return table;
             //if(user.role.name == "Оператор ОМСУ")
             //{
@@ -195,11 +220,11 @@ namespace lab6
             DataTable table = SelectFromDB(
                 "SELECT [Locality].id_Locality " +
                 "FROM Locality " +
-                "WHERE [Locality].Name = '" + record[0]+"'"
+                "WHERE [Locality].Name = '" + record[0]+"' "
                 );
             string sql = ExecuteQueryWithAnswer(
-                "INSERT INTO Plan_Schedule (id_Locality, Month, Year) " +
-                "VALUES ('" + table.Rows[0][0] + "', '" + record[1] + "', '" + record[2] + "');");
+                "INSERT INTO Plan_Schedule (id_Locality, Month, Year, PDF_path, id_Organization) " +
+                "VALUES ('" + table.Rows[0][0] + "', '" + record[1] + "', '" + record[2] + "', '"+ "" + "', '"+ Session.GetCurrentUser().idOrganization +"'); ");
         }
         //Удаление записи из бд по id
         public static void ListPlanScheduleDelete(int idSelectedPlanSchedule) 
@@ -224,43 +249,8 @@ namespace lab6
                 "PDF_path = '" + record[3] +"' " +
                 "WHERE id = " + idSelectedPlanSchedule + ";");
         }
-       
-        //  Фильтр/сортировка
-        //  Название столбца для сортировки задается в свойствах radioButton.Tag
-        public static DataTable ListPlanScheduleFilterSelect(string filter, string sort)
-        {
-            string cellValue = "";
-            string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +
-                        "FROM Plan_Schedule, Locality " +
-                        "WHERE [Plan_Schedule].id_Locality = [Locality].id_Locality ";
-
-            DataTable table = SelectFromDB(sql);
-            table.Columns[0].ColumnName = "id";
-            table.Columns[1].ColumnName = "Name";
-            table.Columns[2].ColumnName = "Month";
-            table.Columns[3].ColumnName = "Year";
-
-            if(filter != "")
-                for (int i = 0; i < table.Rows.Count; i++)
-                {
-                    for (int j = 0; j < table.Columns.Count; j++)
-                    {
-                        cellValue = table.Rows[i][j].ToString();
-                        if (cellValue.Contains(filter))
-                        {
-                            if (table.Columns[j].ColumnName.ToString() != "Name")
-                                sql += " AND [Plan_schedule]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                            else
-                                sql += " AND [Locality]." + table.Columns[j].ColumnName.ToString() + " = '" + cellValue + "';";
-                        }
-
-                    }
-                }
-            
-            table = SelectFromDB(sql);
-            table.DefaultView.Sort = sort;
-            return table;
-        }
+        
+        //Получение данных учетной карточки
         public static DataTable ListDataPlanScheduleCard(string idSelectedPlanSchedule)
         {
             string sql = "SELECT [Plan_Schedule].id, [Locality].Name, [Plan_Schedule].Month, [Plan_Schedule].Year, [Plan_Schedule].PDF_path " +

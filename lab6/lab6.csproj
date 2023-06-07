@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="AuthController.cs" />
     <Compile Include="CatchPlanSchedule.cs" />
+    <Compile Include="ExportMaster.cs" />
+    <Compile Include="ImportMaster.cs" />
     <Compile Include="Role\CuratorVebService.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="AuthForm.cs">

@@ -151,19 +151,17 @@ namespace lab6
             List<string> localityList = planSchController.getListlocality();
             catchScheduleComboBox1.DataSource = localityList;
             ExceptionLabel3.Text = "Есть права на удаление";
-            if (user.role.name == "Куратор ВетСлужбы" || user.role.name == "Оператор ВетСлужбы" || user.role.name == "Подписант ВетСлужбы" || user.role.name == "Оператор по отлову" || user.role.name == "Оператор ОМСУ")
+            table = planSchController.getListPlanSchedule("", "");
+            dataGridView1.DataSource = table;
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[4].Visible = false;
+            dataGridView1.Update();
+            if (Session.GetCurrentPM().CanUpdate(new CatchPlanSchedule()))
             {
-                dataGridView1.DataSource = planSchController.getListPlanSchedule(user);
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Update();
-            }
-                
-            if (user.role.name != "Оператор по отлову")
-            {
-                ExceptionLabel1.Text = "Нет прав на добавление";
-                ExceptionLabel3.Text = "Нет прав на удаление";
-                catchPlanScheduleButton1.Enabled = false;
-                catchPlanScheduleButton5.Enabled = false;
+                ExceptionLabel1.Text = "Есть права на добавление";
+                ExceptionLabel3.Text = "Есть права на удаление";
+                catchPlanScheduleButton1.Enabled = true;
+                catchPlanScheduleButton5.Enabled = true;
             }
             tabControl1.SelectTab(tabPage1);
         }
@@ -171,7 +169,10 @@ namespace lab6
         private void MainForm_Load(object sender, EventArgs e)
         {
             catchScheduleComboBox2.SelectedIndex = 0;
-
+            ExceptionLabel1.Text = "Нет прав на добавление";
+            ExceptionLabel3.Text = "Нет прав на удаление";
+            catchPlanScheduleButton1.Enabled = false;
+            catchPlanScheduleButton5.Enabled = false;
             //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
@@ -181,13 +182,12 @@ namespace lab6
             Regex regex = new Regex("^\\d{4}$");
             if (regex.IsMatch(catchSheduleTextBox1.Text))
             {
-                planSchController.getListPlanScheduleInserted(new ArrayList { catchScheduleComboBox1.Text, catchScheduleComboBox2.Text, catchSheduleTextBox1.Text }, user);
+                planSchController.getListPlanScheduleInserted(new ArrayList { catchScheduleComboBox1.Text, catchScheduleComboBox2.Text, catchSheduleTextBox1.Text });
                 ExceptionLabel1.Text = "Успех!";
-
             }
             else
                 ExceptionLabel1.Text = "Некорректный формат года";
-            table = planSchController.getListPlanSchedule(user);
+            table = planSchController.getListPlanSchedule("","");
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Update();
@@ -212,7 +212,7 @@ namespace lab6
         {
             
             table = planSchController.getDataPlanScheduleCard(dataGridView1.SelectedCells[0].Value.ToString());
-            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm(table, user);
+            PlanScheduleCardForm planScheduleCardForm = new PlanScheduleCardForm(table);
             planScheduleCardForm.Owner= this;
             planScheduleCardForm.ShowDialog();
 
@@ -224,7 +224,7 @@ namespace lab6
             if (catchPlanScheduleRadioButton1.Checked) sort = catchPlanScheduleRadioButton1.Tag.ToString();
             if (catchPlanScheduleRadioButton2.Checked) sort = catchPlanScheduleRadioButton2.Tag.ToString();
             if (catchPlanScheduleRadioButton3.Checked) sort = catchPlanScheduleRadioButton3.Tag.ToString();
-            table = planSchController.getListPlanScheduleFiltered(catchSheduleTextBox2.Text, sort);
+            table = planSchController.getListPlanSchedule(catchSheduleTextBox2.Text, sort);
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
         }
@@ -246,8 +246,8 @@ namespace lab6
 
         private void catchPlanScheduleButton5_Click(object sender, EventArgs e)
         {
-            table = planSchController.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), user);
-            
+            planSchController.getListPlanScheduleDeleted(Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString()), user);
+            table = planSchController.getListPlanSchedule("","");
             dataGridView1.DataSource = table;
             dataGridView1.Columns[0].Visible = false;
         }
@@ -263,16 +263,7 @@ namespace lab6
 
         private void catchPlanScheduleButton3_Click(object sender, EventArgs e)
         {
-            Excel.Application exApp = new Excel.Application();
-            exApp.Workbooks.Add(); Excel.Worksheet wsh = (Excel.Worksheet)exApp.ActiveSheet;
-            int i, j; for (i = 0; i < dataGridView1.RowCount - 1; i++)
-            {
-                for (j = 1; j < dataGridView1.ColumnCount; j++)
-                {
-                    wsh.Cells[i + 1, j + 1] = dataGridView1[j, i].Value.ToString();
-                }
-            }
-            exApp.Visible = true;
+            planSchController.openInExcel(table);
         }
 
         

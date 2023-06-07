@@ -16,13 +16,11 @@ namespace lab6
     public partial class PlanScheduleCardForm : Form
     {
         public DataTable table;
-        public User user;
 
         PlanScheduleController planSchController = new PlanScheduleController();
-        public PlanScheduleCardForm(DataTable table, User user)
+        public PlanScheduleCardForm(DataTable table)
         { 
             this.table = table;
-            this.user = user;
             InitializeComponent();
             
         }
@@ -30,7 +28,8 @@ namespace lab6
         private void button1_Click(object sender, EventArgs e)
         {
             MainForm main = this.Owner as MainForm;
-            table = planSchController.getListPlanScheduleUpdated(user, Convert.ToInt32(textBox1.Text), new ArrayList { comboBox2.SelectedItem, comboBox1.SelectedItem , textBox4.Text, textBox2.Text });
+            planSchController.getListPlanScheduleUpdated(Convert.ToInt32(textBox1.Text), new ArrayList { comboBox2.SelectedItem, comboBox1.SelectedItem , textBox4.Text, textBox2.Text });
+            table = planSchController.getListPlanSchedule("","");
             main.dataGridView1.DataSource = table;
         }
 
@@ -52,16 +51,17 @@ namespace lab6
                 textBox4.Text = row[3].ToString();
                 textBox2.Text = row[4].ToString();
             }
-            userRoleLabel1.Text = user.role.name;
-            if (user.role.name != "Оператор по отлову")
-            {
-                button3.Enabled = false;
-                userRoleLabel2.Text = "Нет";
-            }
-            else
+            userRoleLabel1.Text = Session.GetCurrentUser().role.name;
+            if (Session.GetCurrentPM().CanUpdate(new CatchPlanSchedule()))
             {
                 button3.Enabled = true;
                 userRoleLabel2.Text = "Редактирование";
+                
+            }
+            else
+            {
+                button3.Enabled = false;
+                userRoleLabel2.Text = "Нет";
             }
         }
 
@@ -83,16 +83,9 @@ namespace lab6
 
         private void button2_Click(object sender, EventArgs e)
         {
-            AttachPDF();
+            textBox2.Text = planSchController.attachPDF();
         }
-        private void AttachPDF()
-        {
-            OpenFileDialog OPF = new OpenFileDialog();
-            if (OPF.ShowDialog() == DialogResult.OK)
-            {
-                textBox2.Text = OPF.FileName;
-            }
-        }
+        
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
